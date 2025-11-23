@@ -3,179 +3,320 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>⚡ REDFORCE | HYPERSTREAM ACCESS ⚡</title>
+    <title>🏆 FINAL MASTERPIECE | V17.0 - HD 🏆</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&family=Rajdhani:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* ========================================= */
-        /* ১. রুট ভেরিয়েবল ও বেস স্টাইল */
-        /* ========================================= */
+        /* ========================================================================= */
+        /* ১. রুট ভেরিয়েবলস ও আল্টিমেট গ্লো সেটিংস */
+        /* ========================================================================= */
         :root {
-            --color-primary: #10c0ff; 
-            --color-secondary: #ff33cc; 
-            --color-bg-dark: #070912;
+            --color-deep-blue: #020710;         
+            --color-accent-aqua: #00ffc3;       
+            --color-accent-gold: #FFC72C;       
+            --color-text-light: #ECF0F1;
+            
+            /* আল্টিমেট গ্লো প্যারামিটার */
+            --ultimate-glow: 
+                0 0 15px var(--color-accent-aqua), 
+                0 0 60px var(--color-accent-aqua), 
+                0 0 120px var(--color-accent-aqua), 
+                0 0 200px var(--color-accent-gold); 
+            
+            /* আপনার ছবির লিঙ্ক */
+            --background-image-url: url('https://images.unsplash.com/photo-1542382106-16e6f985a975?fit=crop&w=1920&h=1080&q=80');
         }
         
+        /* ------------------- ফন্ট সেটিংস ------------------- */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, var(--color-bg-dark) 0%, #171d2b 100%);
-            color: #e0e0e0;
+            font-family: 'Baloo Da 2', sans-serif; /* বাংলা লেখার জন্য সুন্দর ফন্ট */
+            /* ... অন্যান্য স্টাইল */
+        }
+        .header-section h1 {
+            font-family: 'Rajdhani', sans-serif; /* ইংরেজি শিরোনামের জন্য রাজধানি */
+            /* ... অন্যান্য স্টাইল */
+        }
+        /* ========================================================================= */
+        /* ২. বেস স্টাইল এবং ব্যাকগ্রাউন্ড সেটআপ */
+        /* ========================================================================= */
+        html, body {
+            height: 100%;
+            width: 100%;
             margin: 0;
             padding: 0;
+            overflow-y: auto; 
+            box-sizing: border-box;
+            background-color: var(--color-deep-blue);
+        }
+
+        body {
+            color: var(--color-text-light); 
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
-            overflow: hidden; /* স্ক্রলিং সম্পূর্ণরূপে বন্ধ */
-            justify-content: center; /* কেন্দ্রে আনা */
+            justify-content: flex-start; 
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 100px; 
+            
+            background-image: 
+                linear-gradient(to top, var(--color-deep-blue) 0%, var(--color-deep-blue) 50%, rgba(2, 7, 16, 0.95) 100%),
+                var(--background-image-url);
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed; 
         }
-
-        /* ========================================= */
-        /* ২. কেন্দ্রীয় কন্টেইনার (মোবাইল অপটিমাইজড) */
-        /* ========================================= */
-        .main-stream-container {
-            width: 95%;
-            max-width: 400px; /* সর্বোচ্চ আকার নিয়ন্ত্রণ */
+        
+        /* ------------------- শিরোনাম সেকশন ------------------- */
+        .header-section {
+            padding-top: 50px;
             text-align: center;
-            /* ফুটারের জন্য জায়গা রাখা */
-            height: calc(100vh - 60px); 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            width: 95%;
         }
-
-        h1 {
-            font-size: 1.8em; /* ছোট করা হলো */
+        .header-section h1 {
+            font-size: 11vw; 
             font-weight: 900;
-            color: var(--color-primary);
-            text-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
-            letter-spacing: 2px;
-            margin-bottom: 2px;
+            color: var(--color-text-light); 
+            text-transform: uppercase;
+            text-shadow: var(--ultimate-glow); 
+            letter-spacing: 5px;
+            margin-bottom: 5px;
+            padding: 10px 0;
         }
 
         .subtitle {
-            font-size: 0.8em; /* ছোট করা হলো */
-            color: #888;
-            margin-bottom: 30px; /* মার্জিন কমানো হলো */
-            font-weight: 500;
+            font-size: 4vw; 
+            color: var(--color-accent-gold);
+            margin-bottom: 30px; 
+            font-weight: 700;
+            text-shadow: 0 0 5px var(--color-accent-gold);
         }
-        
-        /* ========================================= */
-        /* ৩. লাইভ স্ট্রিম কার্ড (ফোকাসড) */
-        /* ========================================= */
-        .live-tv-card {
-            background: linear-gradient(135deg, rgba(255, 51, 204, 0.15), rgba(16, 192, 255, 0.1));
-            border: 2px solid var(--color-secondary);
-            border-radius: 12px; /* সামান্য ছোট করা হলো */
-            box-shadow: 0 0 20px rgba(255, 51, 204, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 15px; /* প্যাডিং কমানো হলো */
-            transition: all 0.5s ease;
+
+        /* ========================================================================= */
+        /* ৩. কেন্দ্রীয় কন্টেইনার, বাটন এবং গ্রিড */
+        /* ========================================================================= */
+        .main-stream-container {
+            width: 95%;
+            max-width: 550px; 
+            text-align: center;
+            padding-bottom: 30px; 
+            z-index: 10;
+        }
+
+        /* ------------------- মূল লঞ্চ কার্ড ------------------- */
+        .launch-card {
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--color-accent-aqua);
+            padding: 30px 20px; 
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            font-weight: 900;
+            color: var(--color-accent-aqua);
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--color-accent-aqua);
+        }
+
+        /* ------------------- প্রধান বাটন (ক্লিক-মুক্ত) ------------------- */
+        .launch-btn {
+            background: var(--color-accent-aqua);
+            border: none;
+            border-radius: 10px; 
+            padding: 18px 50px; 
+            color: var(--color-deep-blue);
+            font-weight: 900;
+            font-size: 1.3em; 
+            text-transform: uppercase;
+            box-shadow: 0 0 15px var(--color-accent-aqua), 0 0 30px var(--color-accent-aqua);
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        .tv-icon-group i {
-            font-size: 3em; /* ছোট করা হলো */
-            color: var(--color-primary);
-            animation: pulse 1.5s infinite;
+        .launch-btn:hover {
+             transform: scale(1.05);
+             background: var(--color-accent-gold);
+             box-shadow: 0 0 15px var(--color-accent-gold), 0 0 40px var(--color-accent-gold);
+             color: var(--color-deep-blue);
+        }
+
+        /* ------------------- ক্যাটাগরি গ্রিড সেকশন ------------------- */
+        .category-grid-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: var(--color-accent-gold);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--color-accent-gold);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+            gap: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .category-item {
+            background: rgba(255, 255, 255, 0.03); 
+            padding: 15px 5px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: default; /* ক্লিক করলেও কোনো অ্যাকশন হবে না */
+            border: 1px solid transparent;
+        }
+        
+        .category-item:hover {
+            background: rgba(0, 255, 195, 0.1); 
+            border-color: var(--color-accent-aqua);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--color-accent-aqua);
+        }
+
+        .category-item i {
+            font-size: 2.5em;
+            color: var(--color-accent-aqua);
+            text-shadow: 0 0 8px var(--color-accent-aqua);
             margin-bottom: 5px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
+        .category-item span {
+            display: block;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--color-text-light);
         }
 
-        .status-text {
-            font-size: 1em; /* ছোট করা হলো */
-            font-weight: 700;
-            color: var(--color-secondary);
-            margin-bottom: 20px;
-        }
 
-        .tv-action-btn {
-            background: var(--color-secondary);
-            border: none;
-            border-radius: 8px; /* ছোট করা হলো */
-            padding: 12px 30px; /* প্যাডিং কমানো হলো */
-            color: var(--color-bg-dark);
-            font-weight: 700;
-            font-size: 1em; /* ছোট করা হলো */
-            text-transform: uppercase;
-            box-shadow: 0 0 10px var(--color-secondary);
-            transition: 0.3s;
-        }
-        .tv-action-btn:hover {
-             background: var(--color-primary);
-             box-shadow: 0 0 15px var(--color-primary);
-             color: white;
-             transform: scale(1.05);
-        }
-
-        /* ৪. ফুটার (স্থির এবং কমপ্যাক্ট) */
+        /* ৪. ফুটার (অপরিবর্তিত) */
         footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(7, 9, 18, 0.95);
-            border-top: 1px solid var(--color-primary);
-            padding: 10px 0; /* প্যাডিং কমানো হলো */
+            background: rgba(2, 7, 16, 0.95); 
+            border-top: 2px solid var(--color-accent-gold);
+            padding: 15px 0; 
             text-align: center;
-            font-size: 0.7em; /* ছোট করা হলো */
-            color: #666;
-            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.5);
+            font-size: 0.8em; 
+            color: #95a5a6;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.8);
             z-index: 100;
         }
         
         footer strong {
-            color: var(--color-primary);
+            color: var(--color-accent-gold);
+            text-shadow: 0 0 5px var(--color-accent-gold);
+        }
+
+        /* ------------------- মিডিয়া কোয়েরি ------------------- */
+        @media (max-width: 400px) {
+             .header-section h1 { 
+                font-size: 10vw; 
+                letter-spacing: 4px;
+            }
+            .subtitle { font-size: 3.5vw; }
+            .launch-btn { font-size: 1.1em; padding: 15px 40px; }
+            .category-grid { grid-template-columns: repeat(3, 1fr); } /* 3 কলাম গ্রিড */
+            .category-item i { font-size: 2em; }
+            .category-item span { font-size: 0.7em; }
         }
     </style>
 </head>
 <body>
 
     <div class="main-stream-container">
-        <h1>RED FORCE IPTV</h1>
-        <p class="subtitle">Secure Live Stream Access Protocol</p>
-
-        <div class="live-tv-card" id="live-stream-card">
-            <div class="tv-icon-group">
-                <i class="fas fa-satellite-dish"></i>
-            </div>
-            <p class="status-text">CLICK TO INITIATE LIVE ACCESS</p>
-            <button class="tv-action-btn" id="stream-button">WATCH STREAM NOW</button>
+        <div class="header-section">
+            <h1>TOUCH NET IP TV</h1>
+            <p class="subtitle">চূড়ান্ত মোবাইল স্ট্রিমিং অভিজ্ঞতা</p>
         </div>
+
+        <div class="launch-card" id="live-stream-card">
+            <p class="card-title">লাইভ স্ট্রিমিং অ্যাক্সেস</p>
+            
+            <button class="launch-btn" id="stream-button">LAUNCH TV CHANNEL</button>
+        </div>
+
+        <p class="category-grid-title">আমাদের বিশেষ কন্টেন্ট ক্যাটাগরি</p>
+        <div class="category-grid">
+            
+            <div class="category-item" data-link="http://live.tv.link">
+                <i class="fas fa-tv"></i>
+                <span>লাইভ টিভি</span>
+            </div>
+            
+            <div class="category-item" data-link="http://iptv.link">
+                <i class="fas fa-satellite-dish"></i>
+                <span>IP TV চ্যানেল</span>
+            </div>
+            
+            <div class="category-item" data-link="http://football.link">
+                <i class="fas fa-futbol"></i>
+                <span>ফুটবল লাইভ</span>
+            </div>
+            
+            <div class="category-item" data-link="http://cricket.link">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>ক্রিকেট স্পোর্টস</span>
+            </div>
+            
+            <div class="category-item" data-link="http://news.link">
+                <i class="fas fa-newspaper"></i>
+                <span>খবর ও সংবাদ</span>
+            </div>
+            
+            <div class="category-item" data-link="http://entertainment.link">
+                <i class="fas fa-film"></i>
+                <span>বিনোদন মুভি</span>
+            </div>
+        </div>
+        
     </div>
 
     <footer>
-        <p>Dashboard Coded By <strong>SH HIMEL</strong> | All Rights Reserved © 2028</p>
+        <p>Poject Create by: <strong>SH HIMEL</strong> | All Right Reserved © 2028</p>
     </footer>
 
     <script>
-        document.getElementById('stream-button').addEventListener('click', function() {
-            const button = this;
-            const statusText = document.querySelector('.status-text');
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('stream-button');
+            const categoryItems = document.querySelectorAll('.category-item');
 
-            // অ্যাক্সেস শুরু
-            button.textContent = "LOADING...";
-            statusText.textContent = "ATTEMPTING IN-APP ACCESS...";
-            button.disabled = true;
-
-            // 1 সেকেন্ড পরে রিডাইরেক্ট শুরু
-            setTimeout(() => {
-                // এই লাইনটি বর্তমান WebView-এর ভেতরেই redforce.live লোড করার চেষ্টা করবে
-                window.location.href = 'http://redforce.live/'; 
+            // ১. প্রধান লঞ্চ বাটন ফাংশন (ক্লিক নিষ্ক্রিয়)
+            button.addEventListener('click', function() {
+                const originalText = this.textContent;
                 
-                // যদি লোড না হয় (সার্ভার ব্লক করার কারণে), তবে ব্যবহারকারীকে একটি বার্তা দেওয়া যেতে পারে
-                // যদিও এটি এখন আর কার্যকর হবে না, কারণ রিডাইরেক্ট শুরু হয়ে গেছে।
-            }, 1000); 
+                // বাটনটিকে লোডিং স্টেট দেখিয়ে নিষ্ক্রিয় করা
+                this.textContent = "অ্যাক্সেস ব্লকড...";
+                this.style.cursor = 'default';
+                this.style.opacity = '0.8';
+                this.disabled = true;
+                
+                // ১ সেকেন্ড পর আসল অবস্থায় ফিরিয়ে আনা (কোনো রিডাইরেক্ট হবে না)
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.disabled = false;
+                    this.style.cursor = 'pointer';
+                    this.style.opacity = '1';
+                }, 1000); 
+            });
+
+            // ২. ক্যাটাগরি আইটেম ক্লিক ফাংশন (সম্পূর্ণ নিষ্ক্রিয়)
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault(); // ডিফল্ট অ্যাকশন বন্ধ করা হলো
+                    // ক্লিক করলে কোনো কিছু ঘটবে না, শুধু ডিজাইনটি লোড থাকবে।
+                });
+            });
         });
     </script>
 </body>
