@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touch net ip TV | HyperStream VR Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================= */
+        /* ১. ভেরিয়েবল ও বেস স্টাইল */
+        /* ========================================= */
+        :root {
+            --color-primary: #00ffff;
+            --color-secondary: #ff00ff;
+            --color-bg: #050510;
+            --color-dark-bg: #100520;
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: #ffffff;
+            display: flex; flex-direction: column;
+            height: 100vh; overflow: hidden;
+            position: relative;
+        }
+
+        #main-container {
+            display: flex; flex-direction: column; height: 100%;
+        }
+
+        /* ========================================= */
+        /* ২. প্রিলোডার স্টাইল */
+        /* ========================================= */
+        #preloader {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--color-bg);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 9999; opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-ring {
+            width: 80px; height: 80px;
+            border: 5px solid var(--color-dark-bg);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        #preloader p {
+            font-family: var(--font-heading);
+            color: var(--color-secondary);
+            text-shadow: 0 0 5px var(--color-secondary);
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ========================================= */
+        /* ৩. হেডার ও নেভিগেশন স্টাইল */
+        /* ========================================= */
+        .header {
+            background: linear-gradient(180deg, rgba(16, 5, 32, 0.95), rgba(0, 0, 0, 0.8));
+            padding: 15px 40px;
+            border-bottom: 3px solid var(--color-primary);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.5);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 10;
+        }
+
+        .logo h1 {
+            margin: 0; font-family: var(--font-heading); font-size: 2em; letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
+            animation: neon-flicker 3s infinite alternate;
+        }
+
+        .logo .tag {
+            font-size: 0.5em; vertical-align: top; color: var(--color-secondary);
+        }
+
+        .nav-menu { display: flex; }
+
+        .nav-item {
+            color: #fff; text-decoration: none;
+            padding: 8px 15px; margin-left: 15px;
+            border: 1px solid transparent; transition: all 0.3s ease;
+            font-family: var(--font-heading); letter-spacing: 1px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            border-color: var(--color-secondary); color: var(--color-secondary);
+            box-shadow: 0 0 10px var(--color-secondary);
+        }
+
+        /* ========================================= */
+        /* ৪. মেইন কন্টেন্ট ও আইফ্রেম স্টাইল */
+        /* ========================================= */
+        .main-stage {
+            flex-grow: 1; display: flex;
+            justify-content: center; align-items: center;
+            padding: 20px; position: relative;
+        }
+
+        .vr-frame-wrapper {
+            width: 95%; height: 95%; position: relative;
+            max-width: 1600px; max-height: 900px;
+            background: var(--color-dark-bg);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.5);
+            padding: 15px; border-radius: 10px; border: 2px solid var(--color-secondary);
+        }
+
+        .vr-frame { width: 100%; height: 100%; position: relative; }
+
+        .stream-info {
+            position: absolute; top: 0; left: 0; right: 0;
+            padding: 10px; background: rgba(0, 0, 0, 0.7);
+            color: var(--color-primary); font-family: var(--font-body);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 2; transform: translateY(-100%); transition: transform 0.3s ease-out;
+        }
+
+        .vr-frame:hover .stream-info { transform: translateY(0); }
+
+        .content-iframe {
+            width: 100%; height: 100%; border: none; display: block; position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+        }
+
+        #fullscreen-btn {
+            background: var(--color-secondary); color: white; border: none;
+            padding: 8px 15px; cursor: pointer; font-family: var(--font-heading);
+            box-shadow: 0 0 5px var(--color-secondary); transition: background 0.3s ease;
+        }
+
+        #fullscreen-btn:hover {
+            background: var(--color-primary); box-shadow: 0 0 15px var(--color-primary);
+        }
+
+        .extra-content {
+            flex-grow: 1; display: none; /* বাই ডিফল্ট হাইড করা */
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 50px; text-align: center;
+        }
+
+        .extra-content h2 {
+            font-family: var(--font-heading); color: var(--color-primary);
+            text-shadow: 0 0 5px var(--color-primary);
+        }
+
+        /* ========================================= */
+        /* ৫. ফুটার স্টাইল */
+        /* ========================================= */
+        .footer {
+            background-color: var(--color-dark-bg);
+            padding: 15px 40px; border-top: 3px solid var(--color-secondary);
+            box-shadow: 0 -4px 15px rgba(255, 0, 255, 0.3); z-index: 10;
+        }
+
+        .footer-grid {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85em; color: #aaa;
+        }
+
+        .copyright-text { color: var(--color-primary); }
+
+        /* ========================================= */
+        /* ৬. অ্যানিমেশন */
+        /* ========================================= */
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none; opacity: 0.8;
+            }
+        }
+    </style>
+    </head>
+<body class="loading">
+    
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <p>Initializing HyperStream Network...</p>
+    </div>
+
+    <div id="main-container">
+        
+        <header class="header">
+            <div class="logo">
+                <h1>✨ Touch net ip TV <span class="tag">[LIVE]</span></h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-content="stream">LIVE STREAM</a>
+                <a href="#" class="nav-item" data-content="about">NETWORK STATUS</a>
+                <a href="#" class="nav-item" data-content="help">HELP DESK</a>
+            </nav>
+        </header>
+
+        <main class="main-stage" id="stream-content">
+            <div class="vr-frame-wrapper">
+                <div class="vr-frame" id="vr-frame">
+                    <div class="stream-info">
+                        <span id="status-text">Loading Stream...</span>
+                        <button id="fullscreen-btn" title="Enter Full Screen Mode">
+                            <i class="icon-fullscreen"></i> Full Screen
+                        </button>
+                    </div>
+                    <iframe 
+                        id="main-iframe"
+                        src="http://redforce.live/" 
+                        class="content-iframe" 
+                        allow="autoplay; fullscreen; picture-in-picture; xr-spatial-tracking" 
+                        title="Live VR Stream Player"
+                    ></iframe>
+                </div>
+            </div>
+        </main>
+        
+        <section class="extra-content" id="about-content">
+            <h2>NETWORK STATUS</h2>
+            <p>Connection: Online. Ping: <span id="ping-status">--ms</span>. Uptime: 99.9%</p>
+        </section>
+        
+        <section class="extra-content" id="help-content">
+            <h2>HELP DESK</h2>
+            <p>For technical support, please contact the network administrator.</p>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-grid">
+                <p>Project Created By **SH Himel**</p>
+                <p class="copyright-text">&copy; 2024–2029 | All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // ১. প্রিলোডার ফাংশনালিটি
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            const mainIframe = document.getElementById('main-iframe');
+            const streamContent = document.getElementById('stream-content');
+            streamContent.style.display = 'flex'; // ডিফল্ট কন্টেন্ট দেখানো
+
+            const hidePreloader = () => {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 500);
+                }, 1500);
+            };
+
+            if (mainIframe) {
+                mainIframe.onload = hidePreloader;
+            } else {
+                setTimeout(hidePreloader, 3000); 
+            }
+        });
+
+
+        // ২. নেভিগেশন ট্যাব সুইচিং
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentIds = ['stream-content', 'about-content', 'help-content'];
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetContentId = item.getAttribute('data-content') + '-content';
+
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+
+                    contentIds.forEach(id => {
+                        const contentElement = document.getElementById(id);
+                        if (contentElement) {
+                             contentElement.style.display = 'none';
+                        }
+                    });
+                    
+                    const targetElement = document.getElementById(targetContentId);
+                    if(targetElement) {
+                        targetElement.style.display = 'flex';
+                    }
+                });
+            });
+        });
+
+        // ৩. ফুলস্ক্রিন কার্যকারিতা
+        document.addEventListener('DOMContentLoaded', () => {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const vrFrame = document.getElementById('vr-frame');
+
+            if (fullscreenBtn && vrFrame) {
+                fullscreenBtn.addEventListener('click', () => {
+                    if (vrFrame.requestFullscreen) {
+                        vrFrame.requestFullscreen();
+                    } else if (vrFrame.webkitRequestFullscreen) { 
+                        vrFrame.webkitRequestFullscreen();
+                    }
+                });
+            }
+        });
+
+
+        // ৪. ডাইনামিক স্ট্যাটাস আপডেট
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusText = document.getElementById('status-text');
+            const pingStatus = document.getElementById('ping-status');
+            const statuses = ["Stream Online", "Data Secured", "Streaming HD", "Latency Low"];
+            let statusIndex = 0;
+
+            if (statusText) {
+                setInterval(() => {
+                    statusIndex = (statusIndex + 1) % statuses.length;
+                    statusText.textContent = statuses[statusIndex];
+                }, 5000); 
+            }
+
+            if (pingStatus) {
+                setInterval(() => {
+                    const randomPing = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
+                    pingStatus.textContent = `${randomPing}ms`;
+                }, 3000);
+            }
+        });
+
+        // ৫. কনসোল বার্তা
+        console.log("PROJECT: Touch net ip TV | CREATOR: SH Himel | STATUS: Initiating secure stream protocol.");
+    </script>
+    </body>
+</html>
