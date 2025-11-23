@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>🏆 FINAL MASTERPIECE | V17.0 - HD 🏆</title>
+    <title>✅ FINAL ACTIVATED MASTERPIECE | V17.1 ✅</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&family=Rajdhani:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         /* ========================================================================= */
-        /* ১. রুট ভেরিয়েবলস ও আল্টিমেট গ্লো সেটিংস */
+        /* ১. রুট ভেরিয়েবলস (স্টাইল অপরিবর্তিত) */
         /* ========================================================================= */
         :root {
             --color-deep-blue: #020710;         
@@ -18,26 +18,25 @@
             --color-accent-gold: #FFC72C;       
             --color-text-light: #ECF0F1;
             
-            /* আল্টিমেট গ্লো প্যারামিটার */
             --ultimate-glow: 
                 0 0 15px var(--color-accent-aqua), 
                 0 0 60px var(--color-accent-aqua), 
                 0 0 120px var(--color-accent-aqua), 
                 0 0 200px var(--color-accent-gold); 
             
-            /* আপনার ছবির লিঙ্ক */
             --background-image-url: url('https://images.unsplash.com/photo-1542382106-16e6f985a975?fit=crop&w=1920&h=1080&q=80');
         }
         
         /* ------------------- ফন্ট সেটিংস ------------------- */
         body {
-            font-family: 'Baloo Da 2', sans-serif; /* বাংলা লেখার জন্য সুন্দর ফন্ট */
+            font-family: 'Baloo Da 2', sans-serif; 
             /* ... অন্যান্য স্টাইল */
         }
         .header-section h1 {
-            font-family: 'Rajdhani', sans-serif; /* ইংরেজি শিরোনামের জন্য রাজধানি */
+            font-family: 'Rajdhani', sans-serif; 
             /* ... অন্যান্য স্টাইল */
         }
+        
         /* ========================================================================= */
         /* ২. বেস স্টাইল এবং ব্যাকগ্রাউন্ড সেটআপ */
         /* ========================================================================= */
@@ -125,7 +124,7 @@
             text-shadow: 0 0 10px var(--color-accent-aqua);
         }
 
-        /* ------------------- প্রধান বাটন (ক্লিক-মুক্ত) ------------------- */
+        /* ------------------- প্রধান বাটন (অ্যাক্টিভ) ------------------- */
         .launch-btn {
             background: var(--color-accent-aqua);
             border: none;
@@ -146,6 +145,11 @@
              box-shadow: 0 0 15px var(--color-accent-gold), 0 0 40px var(--color-accent-gold);
              color: var(--color-deep-blue);
         }
+        
+        .launch-btn:active {
+             transform: scale(0.95);
+        }
+
 
         /* ------------------- ক্যাটাগরি গ্রিড সেকশন ------------------- */
         .category-grid-title {
@@ -171,7 +175,7 @@
             padding: 15px 5px;
             border-radius: 10px;
             transition: all 0.3s ease;
-            cursor: default; /* ক্লিক করলেও কোনো অ্যাকশন হবে না */
+            cursor: default; /* ক্লিক নিষ্ক্রিয় */
             border: 1px solid transparent;
         }
         
@@ -226,7 +230,7 @@
             }
             .subtitle { font-size: 3.5vw; }
             .launch-btn { font-size: 1.1em; padding: 15px 40px; }
-            .category-grid { grid-template-columns: repeat(3, 1fr); } /* 3 কলাম গ্রিড */
+            .category-grid { grid-template-columns: repeat(3, 1fr); } 
             .category-item i { font-size: 2em; }
             .category-item span { font-size: 0.7em; }
         }
@@ -243,7 +247,7 @@
         <div class="launch-card" id="live-stream-card">
             <p class="card-title">লাইভ স্ট্রিমিং অ্যাক্সেস</p>
             
-            <button class="launch-btn" id="stream-button">LAUNCH TV CHANNEL</button>
+            <button class="launch-btn" id="stream-button">LAUNCH LIVE TV NOW</button>
         </div>
 
         <p class="category-grid-title">আমাদের বিশেষ কন্টেন্ট ক্যাটাগরি</p>
@@ -283,7 +287,7 @@
     </div>
 
     <footer>
-        <p>Poject Create by: <strong>SH HIMEL</strong> | All Right Reserved © 2028</p>
+        <p>Poject Created by: <strong>SH HIMEL</strong> | All Right Reserved © 2028</p>
     </footer>
 
     <script>
@@ -291,30 +295,22 @@
             const button = document.getElementById('stream-button');
             const categoryItems = document.querySelectorAll('.category-item');
 
-            // ১. প্রধান লঞ্চ বাটন ফাংশন (ক্লিক নিষ্ক্রিয়)
+            // ১. প্রধান লঞ্চ বাটন ফাংশন (💥 এখন সক্রিয় 💥)
             button.addEventListener('click', function() {
-                const originalText = this.textContent;
-                
-                // বাটনটিকে লোডিং স্টেট দেখিয়ে নিষ্ক্রিয় করা
-                this.textContent = "অ্যাক্সেস ব্লকড...";
-                this.style.cursor = 'default';
-                this.style.opacity = '0.8';
+                this.textContent = "LOADING...";
                 this.disabled = true;
                 
-                // ১ সেকেন্ড পর আসল অবস্থায় ফিরিয়ে আনা (কোনো রিডাইরেক্ট হবে না)
+                // ১ সেকেন্ড অপেক্ষা করার পর রিডাইরেক্ট করা হচ্ছে
                 setTimeout(() => {
-                    this.textContent = originalText;
-                    this.disabled = false;
-                    this.style.cursor = 'pointer';
-                    this.style.opacity = '1';
+                    // 💥💥 রিডাইরেক্ট অ্যাক্টিভ করা হলো 💥💥
+                    window.location.href = 'http://redforce.live/'; 
                 }, 1000); 
             });
 
-            // ২. ক্যাটাগরি আইটেম ক্লিক ফাংশন (সম্পূর্ণ নিষ্ক্রিয়)
+            // ২. ক্যাটাগরি আইটেম ক্লিক ফাংশন (নিষ্ক্রিয় রাখা হলো)
             categoryItems.forEach(item => {
                 item.addEventListener('click', function(e) {
-                    e.preventDefault(); // ডিফল্ট অ্যাকশন বন্ধ করা হলো
-                    // ক্লিক করলে কোনো কিছু ঘটবে না, শুধু ডিজাইনটি লোড থাকবে।
+                    e.preventDefault(); 
                 });
             });
         });
