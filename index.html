@@ -1,269 +1,182 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚡ Quantum Stream Portal | Touch Net IPTV ⚡</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>⚡ REDFORCE | HYPERSTREAM ACCESS ⚡</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Bungee+Inline&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <script> 
-        if (top != self) { 
-            top.location = self.location; 
-        } 
-    </script>
-
     <style>
         /* ========================================= */
         /* ১. রুট ভেরিয়েবল ও বেস স্টাইল */
         /* ========================================= */
         :root {
-            --color-primary: #00ffff; /* সায়ান */
-            --color-secondary: #ff00ff; /* ম্যাজেন্টা */
-            --color-accent: #00ff00; /* সবুজ */
-            --color-bg: #00000a; /* আল্ট্রা ডার্ক */
-            --font-heading: 'Orbitron', sans-serif;
-            --font-button: 'Bungee Inline', cursive;
+            --color-primary: #10c0ff; 
+            --color-secondary: #ff33cc; 
+            --color-bg-dark: #070912;
         }
         
-        * { box-sizing: border-box; }
-
         body {
-            margin: 0; padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--color-bg);
-            color: #ffffff;
-            height: 100vh;
-            overflow: hidden;
-            perspective: 1000px; /* 3D ইফেক্টের জন্য */
-        }
-        
-        /* ========================================= */
-        /* ২. এন্ট্রি স্ক্রিন (3D কিউব ও নিওন) */
-        /* ========================================= */
-        #entry-screen {
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            height: 100%;
-            text-align: center;
-            background: radial-gradient(circle at 50% 50%, rgba(30, 0, 70, 0.9), var(--color-bg) 70%);
-            animation: bg-scan-line 5s infinite linear;
-            transition: opacity 1.5s ease;
-        }
-        
-        @keyframes bg-scan-line {
-            0% { background-size: 100% 1px, 100% 1px; background-position: 0% 0%, 0% 100%; }
-            50% { background-position: 100% 50%, 0% 50%; }
-            100% { background-size: 100% 1px, 100% 1px; background-position: 0% 100%, 0% 0%; }
-        }
-
-        .cube-container {
-            width: 150px; height: 150px;
-            margin-bottom: 50px;
-            transform-style: preserve-3d;
-            animation: cube-spin 12s infinite linear;
-        }
-        
-        .cube {
-            width: 150px; height: 150px;
-            transform-style: preserve-3d;
-        }
-        
-        .cube-face {
-            position: absolute; width: 150px; height: 150px;
-            border: 3px solid var(--color-primary);
-            box-shadow: 0 0 20px var(--color-primary), inset 0 0 10px var(--color-secondary);
-            opacity: 0.8;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex; justify-content: center; align-items: center;
-            font-family: var(--font-heading);
-            font-size: 1.2em;
-        }
-
-        .face-front { transform: rotateY(0deg) translateZ(75px); }
-        .face-back { transform: rotateY(180deg) translateZ(75px); }
-        .face-right { transform: rotateY(90deg) translateZ(75px); }
-        .face-left { transform: rotateY(-90deg) translateZ(75px); }
-        .face-top { transform: rotateX(90deg) translateZ(75px); }
-        .face-bottom { transform: rotateX(-90deg) translateZ(75px); }
-
-        @keyframes cube-spin {
-            from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-            to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
-
-        .app-title {
-            font-family: var(--font-heading);
-            font-size: 3.5em;
-            text-shadow: 0 0 15px var(--color-primary), 0 0 30px var(--color-secondary);
-            animation: title-flicker 1s infinite alternate;
-        }
-        
-        @keyframes title-flicker {
-             0%, 100% { opacity: 1; } 
-             50% { opacity: 0.8; }
-        }
-
-        /* LIVE বাটন স্টাইল */
-        #live-button {
-            padding: 25px 70px;
-            font-size: 1.6em;
-            font-family: var(--font-button);
-            background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
-            color: var(--color-bg);
-            border: 5px solid var(--color-accent);
-            border-radius: 5px;
-            box-shadow: 0 0 40px rgba(255, 0, 255, 0.9), 0 0 60px var(--color-primary);
-            transition: all 0.3s ease;
-            text-shadow: 2px 2px 0 var(--color-bg);
-        }
-
-        #live-button:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 20px var(--color-accent);
-        }
-
-        /* ========================================= */
-        /* ৩. অ্যাপ ভিউ স্টাইল */
-        /* ========================================= */
-        #app-view {
-            display: none;
-            height: 100%; width: 100%;
-            flex-direction: column;
-            position: relative;
-        }
-        
-        .app-nav-bar {
-            background: rgba(0, 0, 0, 0.95);
-            color: var(--color-primary);
-            padding: 10px;
-            text-align: center;
-            font-family: var(--font-heading);
-            font-size: 1em;
-            border-bottom: 3px solid var(--color-secondary);
-        }
-
-        #main-iframe {
-            width: 100%; height: 100%;
-            border: none;
-            display: block;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-        }
-        
-        /* ========================================= */
-        /* ৪. ইউনিক ফুটার স্টাইল */
-        /* ========================================= */
-        .unique-footer {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 10px 0;
-            background: rgba(0, 0, 0, 0.9);
-            text-align: center;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.85em;
-            border-top: 1px dashed var(--color-accent);
-            box-shadow: 0 -5px 15px rgba(0, 255, 0, 0.2);
-        }
-        
-        .creator-text {
-            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, var(--color-bg-dark) 0%, #171d2b 100%);
+            color: #e0e0e0;
             margin: 0;
-            /* ডায়নামিক টেক্সট ইফেক্ট */
-            animation: text-glitch 4s infinite alternate;
-        }
-        
-        .creator-highlight {
-            color: var(--color-accent);
-            text-shadow: 0 0 5px var(--color-accent);
-            font-weight: 700;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* স্ক্রলিং সম্পূর্ণরূপে বন্ধ */
+            justify-content: center; /* কেন্দ্রে আনা */
         }
 
-        @keyframes text-glitch {
-            0% { transform: translate(0, 0); }
-            20% { transform: translate(-1px, 1px); }
-            40% { transform: translate(1px, -1px); }
-            60% { transform: translate(-1px, -1px); }
-            80% { transform: translate(1px, 1px); }
-            100% { transform: translate(0, 0); }
+        /* ========================================= */
+        /* ২. কেন্দ্রীয় কন্টেইনার (মোবাইল অপটিমাইজড) */
+        /* ========================================= */
+        .main-stream-container {
+            width: 95%;
+            max-width: 400px; /* সর্বোচ্চ আকার নিয়ন্ত্রণ */
+            text-align: center;
+            /* ফুটারের জন্য জায়গা রাখা */
+            height: calc(100vh - 60px); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 1.8em; /* ছোট করা হলো */
+            font-weight: 900;
+            color: var(--color-primary);
+            text-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-secondary);
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.8em; /* ছোট করা হলো */
+            color: #888;
+            margin-bottom: 30px; /* মার্জিন কমানো হলো */
+            font-weight: 500;
+        }
+        
+        /* ========================================= */
+        /* ৩. লাইভ স্ট্রিম কার্ড (ফোকাসড) */
+        /* ========================================= */
+        .live-tv-card {
+            background: linear-gradient(135deg, rgba(255, 51, 204, 0.15), rgba(16, 192, 255, 0.1));
+            border: 2px solid var(--color-secondary);
+            border-radius: 12px; /* সামান্য ছোট করা হলো */
+            box-shadow: 0 0 20px rgba(255, 51, 204, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 15px; /* প্যাডিং কমানো হলো */
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .tv-icon-group i {
+            font-size: 3em; /* ছোট করা হলো */
+            color: var(--color-primary);
+            animation: pulse 1.5s infinite;
+            margin-bottom: 5px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .status-text {
+            font-size: 1em; /* ছোট করা হলো */
+            font-weight: 700;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+        }
+
+        .tv-action-btn {
+            background: var(--color-secondary);
+            border: none;
+            border-radius: 8px; /* ছোট করা হলো */
+            padding: 12px 30px; /* প্যাডিং কমানো হলো */
+            color: var(--color-bg-dark);
+            font-weight: 700;
+            font-size: 1em; /* ছোট করা হলো */
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--color-secondary);
+            transition: 0.3s;
+        }
+        .tv-action-btn:hover {
+             background: var(--color-primary);
+             box-shadow: 0 0 15px var(--color-primary);
+             color: white;
+             transform: scale(1.05);
+        }
+
+        /* ৪. ফুটার (স্থির এবং কমপ্যাক্ট) */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(7, 9, 18, 0.95);
+            border-top: 1px solid var(--color-primary);
+            padding: 10px 0; /* প্যাডিং কমানো হলো */
+            text-align: center;
+            font-size: 0.7em; /* ছোট করা হলো */
+            color: #666;
+            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        
+        footer strong {
+            color: var(--color-primary);
         }
     </style>
-    </head>
+</head>
 <body>
 
-    <div id="entry-screen">
-        
-        <div class="cube-container">
-            <div class="cube">
-                <div class="cube-face face-front">LIVE</div>
-                <div class="cube-face face-back">HD</div>
-                <div class="cube-face face-right">VR</div>
-                <div class="cube-face face-left">NET</div>
-                <div class="cube-face face-top">24/7</div>
-                <div class="cube-face face-bottom">STREAM</div>
+    <div class="main-stream-container">
+        <h1>RED FORCE IPTV</h1>
+        <p class="subtitle">Secure Live Stream Access Protocol</p>
+
+        <div class="live-tv-card" id="live-stream-card">
+            <div class="tv-icon-group">
+                <i class="fas fa-satellite-dish"></i>
             </div>
+            <p class="status-text">CLICK TO INITIATE LIVE ACCESS</p>
+            <button class="tv-action-btn" id="stream-button">WATCH STREAM NOW</button>
         </div>
-        
-        <h1 class="app-title">Touch net ip TV <br><span style="font-size: 0.4em;">Hyper Stream Portal</span></h1>
-        
-        <button id="live-button">
-            ⚡ ENTER LIVE STREAM ⚡
-        </button>
-
     </div>
 
-    <div id="app-view">
-        <div class="app-nav-bar">
-            🟢 Quantum Stream Active | Touch Net IP TV
-        </div>
-        
-        <iframe 
-            id="main-iframe"
-            src="http://redforce.live/" allow="autoplay; fullscreen; picture-in-picture; xr-spatial-tracking" 
-            title="Live Stream Viewer"
-        ></iframe>
-    </div>
-    
-    <footer class="unique-footer">
-        <p class="creator-text">
-            Project Created By <span class="creator-highlight">**SH Himel**</span> | © 2024–2029
-        </p>
+    <footer>
+        <p>Dashboard Coded By <strong>SH HIMEL</strong> | All Rights Reserved © 2028</p>
     </footer>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const liveButton = document.getElementById('live-button');
-            const entryScreen = document.getElementById('entry-screen');
-            const appView = document.getElementById('app-view');
-            const mainIframe = document.getElementById('main-iframe');
-            
-            // ১. লাইভ বাটনে ক্লিক করলে
-            liveButton.addEventListener('click', () => {
-                entryScreen.style.opacity = '0';
-                
-                // গ্যারান্টিড লোডিং: 500ms পরে স্ক্রিন সরাতে হবে, iFrame লোড হোক বা না হোক
-                setTimeout(() => {
-                    entryScreen.style.display = 'none';
-                    appView.style.display = 'flex'; 
-                    // iFrame লোড শুরু হবে
-                    mainIframe.src = "http://redforce.live/"; // ⬅️⬅️⬅️ এখানেই আপনার কার্যকর লিংকটি বসান (২য় স্থান)
-                    
-                }, 500); 
-            });
+        document.getElementById('stream-button').addEventListener('click', function() {
+            const button = this;
+            const statusText = document.querySelector('.status-text');
 
-            // প্রিলোডার ফিক্স: DOM লোড হলেই প্রিলোডারটি সরাতে হবে
+            // অ্যাক্সেস শুরু
+            button.textContent = "LOADING...";
+            statusText.textContent = "ATTEMPTING IN-APP ACCESS...";
+            button.disabled = true;
+
+            // 1 সেকেন্ড পরে রিডাইরেক্ট শুরু
             setTimeout(() => {
-                document.getElementById('entry-screen').style.opacity = '1';
-            }, 100);
-
-            // ২. ফুলস্ক্রিন ও অটো রোটেট লজিক 
-            document.addEventListener('fullscreenchange', () => {
-                console.log("Fullscreen request triggered. Check WebView settings for auto-rotation.");
-            });
-
-            // ৩. কনসোল বার্তা
-            console.log("--- GEMINI'S BEST EFFORT CODE LOADED ---");
-            console.log("PROJECT: Quantum Stream Portal | STATUS: Awaiting Valid iFrame Source.");
-            console.log("-----------------------------------------");
+                // এই লাইনটি বর্তমান WebView-এর ভেতরেই redforce.live লোড করার চেষ্টা করবে
+                window.location.href = 'http://redforce.live/'; 
+                
+                // যদি লোড না হয় (সার্ভার ব্লক করার কারণে), তবে ব্যবহারকারীকে একটি বার্তা দেওয়া যেতে পারে
+                // যদিও এটি এখন আর কার্যকর হবে না, কারণ রিডাইরেক্ট শুরু হয়ে গেছে।
+            }, 1000); 
         });
     </script>
-    </body>
+</body>
 </html>
