@@ -543,7 +543,7 @@
             const trxid = document.getElementById('trxid').value;
 
             // মেসেজ ফরম্যাটিং
-            const text = `*✅ NEW TOPUP ORDER* %0A` +
+            const text = `*✅ NEW TOP-UP ORDER* %0A` +
                          `-----------------------------%0A` +
                          `💎 *Pack:* ${selectedItem} %0A` +
                          `💰 *Price:* ${selectedPrice} TK %0A` +
