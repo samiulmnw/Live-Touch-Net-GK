@@ -1,527 +1,448 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>ULTIMATE STREAM & STORE | V18.0 PRO</title>
+    <title>ULTIMATE STREAM & STORE | V20.0 PRO</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&family=Rajdhani:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         /* ========================================================================= */
-        /* ১. গ্লোবাল স্টাইলস এবং ভেরিয়েবলস */
+        /* ১. গ্লোবাল স্টাইলস */
         /* ========================================================================= */
         :root {
-            --color-deep-blue: #020710;          
-            --color-accent-aqua: #00ffc3;        
-            --color-accent-gold: #FFC72C;  
-            --color-fire-orange: #ff4500; /* Free Fire Color */
-            --color-text-light: #ECF0F1;
-            
-            --ultimate-glow: 
-                0 0 15px var(--color-accent-aqua), 
-                0 0 60px var(--color-accent-aqua); 
-            
-            --fire-glow:
-                0 0 15px var(--color-fire-orange),
-                0 0 40px var(--color-accent-gold);
-
+            --color-deep-blue: #020710;            
+            --color-accent-aqua: #00ffc3;          
+            --color-accent-gold: #FFC72C;
+            --color-discount: #ff3b3b;
             --bg-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?fit=crop&w=1920&h=1080&q=80');
         }
         
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Baloo Da 2', sans-serif; 
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             min-height: 100vh;
             background-color: var(--color-deep-blue);
-            color: var(--color-text-light);
-            overflow-x: hidden;
-            
-            /* ব্যাকগ্রাউন্ড সেটআপ */
-            background-image: 
-                linear-gradient(to top, var(--color-deep-blue) 0%, rgba(2, 7, 16, 0.9) 60%, rgba(2, 7, 16, 0.95) 100%),
-                var(--bg-image);
+            color: #ECF0F1;
+            background-image: linear-gradient(to top, var(--color-deep-blue) 0%, rgba(2, 7, 16, 0.95) 100%), var(--bg-image);
             background-size: cover;
-            background-position: center;
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* স্ক্রিন ট্রানজিশন এনিমেশন */
+        /* স্ক্রিন ট্রানজিশন */
         .screen-section {
-            display: none; /* ডিফল্ট হাইড */
-            animation: fadeIn 0.5s ease-in-out;
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
             width: 100%;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 120px; /* ফুটারের জন্য জায়গা */
         }
-
         .screen-section.active {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ========================================================================= */
-        /* ২. হোম স্ক্রিন (TOUCH NET IP TV) ডিজাইন */
+        /* ২. স্পেশাল ফিলিস্তিন পপ-আপ (Special Requirement) */
         /* ========================================================================= */
-        .header-section {
-            padding-top: 40px;
+        #palestine-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999; /* সবার উপরে */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center;
-            width: 95%;
         }
-        .header-section h1 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 3.5rem; 
-            font-weight: 900;
-            color: var(--color-text-light); 
-            text-transform: uppercase;
-            text-shadow: var(--ultimate-glow); 
-            letter-spacing: 3px;
-            margin: 0;
-        }
-        .subtitle {
-            font-size: 1.2rem; 
-            color: var(--color-accent-gold);
-            margin-bottom: 30px; 
-            font-weight: 700;
-            text-shadow: 0 0 5px var(--color-accent-gold);
-        }
-
-        .main-card-container {
-            width: 90%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        /* কমন কার্ড স্টাইল */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 20px;
-            padding: 25px; 
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* লাইভ টিভি বাটন */
-        .launch-btn {
-            background: var(--color-accent-aqua);
-            border: none;
-            border-radius: 10px; 
-            padding: 15px 30px; 
-            color: var(--color-deep-blue);
-            font-weight: 900;
-            font-size: 1.2em; 
-            text-transform: uppercase;
-            box-shadow: 0 0 15px var(--color-accent-aqua);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            width: 100%;
-        }
-        .launch-btn:active { transform: scale(0.95); }
-
-        /* ফ্রি ফায়ার স্পেশাল কার্ড */
-        .ff-card {
-            border: 1px solid var(--color-fire-orange);
-            background: linear-gradient(145deg, rgba(255, 69, 0, 0.1), rgba(0, 0, 0, 0.6));
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .ff-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,199,44,0.1) 0%, transparent 70%);
-            animation: spin 10s linear infinite;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .ff-content {
-            position: relative;
-            z-index: 2;
-        }
-        .ff-icon {
-            font-size: 3rem;
-            color: var(--color-fire-orange);
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px var(--color-fire-orange));
-        }
-        .ff-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
-            margin: 0;
-            text-shadow: 0 0 10px var(--color-fire-orange);
-        }
-        .ff-sub {
-            color: var(--color-accent-gold);
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-        .click-hint {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #aaa;
+        
+        .palestine-content {
+            border: 2px solid #fff;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            box-shadow: 0 0 50px rgba(0, 153, 0, 0.5); /* ফিলিস্তিন গ্রিন গ্লো */
             animation: pulse 1.5s infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        .flag-icon { font-size: 4rem; margin-bottom: 15px; display: block; }
+        .support-text { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 900; text-transform: uppercase; color: white; margin: 0; }
+        .sub-text { color: #00ffc3; font-size: 1.2rem; margin-top: 10px; }
+        .countdown-circle {
+            margin-top: 20px; width: 50px; height: 50px; border-radius: 50%;
+            border: 3px solid #ff3b3b; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.5rem; color: #ff3b3b;
+        }
+        
+        @keyframes pulse { 0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); } 50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.5); } 100% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); } }
 
         /* ========================================================================= */
-        /* ৩. টপ আপ স্টোর (GK TOP UP) ডিজাইন */
+        /* ৩. হোম স্ক্রিন ডিজাইন */
         /* ========================================================================= */
-        .topup-header {
-            width: 100%;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--color-fire-orange);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+        .header-section { padding-top: 40px; text-align: center; width: 95%; }
+        .header-section h1 {
+            font-family: 'Rajdhani', sans-serif; font-size: 3rem; font-weight: 900;
+            text-transform: uppercase; text-shadow: 0 0 20px var(--color-accent-aqua); margin: 0; letter-spacing: 2px;
+        }
+        .subtitle { color: var(--color-accent-gold); margin-bottom: 30px; font-weight: 700; text-shadow: 0 0 5px var(--color-accent-gold); }
+
+        .container { width: 92%; max-width: 600px; }
+
+        .tv-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 195, 0.3);
+            border-radius: 15px; padding: 20px;
+            text-align: center; margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 195, 0.1);
+        }
+        .launch-btn {
+            background: var(--color-accent-aqua); border: none; border-radius: 8px;
+            padding: 12px 0; width: 100%; color: var(--color-deep-blue);
+            font-weight: 900; font-size: 1.1em; text-transform: uppercase;
+            box-shadow: 0 0 15px var(--color-accent-aqua); cursor: pointer; transition: 0.3s;
+        }
+
+        /* গেম গ্রিড */
+        .section-title {
+            text-align: left; width: 100%; color: var(--color-accent-gold);
+            font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 800;
+            margin-bottom: 15px; border-bottom: 2px solid var(--color-accent-gold); display: inline-block;
+        }
+
+        .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
+
+        .game-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px; padding: 20px 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; height: 140px; position: relative; overflow: hidden;
+        }
+        .game-card:hover { transform: translateY(-5px); border-color: white; }
+        
+        .game-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .game-name { font-family: 'Rajdhani', sans-serif; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; color: white; }
+        .game-sub { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
+
+        /* ========================================================================= */
+        /* ৪. নতুন স্টোর ডিজাইন (ডিসকাউন্ট UI) */
+        /* ========================================================================= */
+        .store-header {
+            width: 100%; padding: 15px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-accent-gold);
+            position: sticky; top: 0; z-index: 50;
         }
         .back-btn {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .store-title {
-            color: var(--color-accent-gold);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
+            background: none; border: 1px solid rgba(255,255,255,0.3);
+            color: white; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;
         }
 
-        .products-container {
-            width: 95%;
-            max-width: 1000px;
-            padding: 20px 0;
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px; width: 95%; max-width: 800px; padding: 20px 0;
+        }
+
+        .product-card {
+            background: linear-gradient(160deg, #1a253a 0%, #0d121c 100%); /* প্রিমিয়াম ডার্ক গ্রেডিয়েন্ট */
+            border: 1px solid #2a3b55;
+            border-radius: 12px; padding: 15px; text-align: center;
+            transition: 0.2s; position: relative; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .product-card:hover { border-color: var(--color-accent-aqua); transform: scale(1.03); box-shadow: 0 0 15px rgba(0, 255, 195, 0.2); }
+        
+        /* ডিসকাউন্ট ব্যাজ ডিজাইন */
+        .discount-badge {
+            position: absolute; top: 0; left: 0;
+            background: linear-gradient(90deg, #ff0000, #ff4d4d);
+            color: white; font-size: 10px; font-weight: 900;
+            padding: 4px 10px; border-bottom-right-radius: 10px;
+            z-index: 10; box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
         }
         
-        .section-badge {
-            background: linear-gradient(90deg, transparent, var(--color-fire-orange), transparent);
-            text-align: center;
-            padding: 8px;
-            margin: 20px 0;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 4px;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-        }
-
-        .item-card {
-            background: rgba(20, 33, 61, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            position: relative;
-            transition: 0.3s;
-        }
-        .item-card:hover {
-            border-color: var(--color-accent-aqua);
-            transform: translateY(-5px);
-            background: rgba(20, 33, 61, 0.9);
-        }
-
-        .item-icon svg {
-            width: 40px; 
-            height: 40px; 
-            filter: drop-shadow(0 0 5px cyan);
-            margin-bottom: 10px;
-        }
-        .item-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; }
-        .item-price { font-size: 1.2rem; color: var(--color-accent-gold); font-weight: 800; display: block; margin-bottom: 10px; }
+        .p-icon { font-size: 2rem; margin: 10px 0 5px 0; display: block; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+        .p-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; display: block; color: #fff; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; }
         
-        .buy-now-btn {
-            width: 100%;
-            background: linear-gradient(90deg, #fca311, #d00000);
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.8rem;
+        /* প্রাইসিং ডিজাইন */
+        .price-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; line-height: 1.2; }
+        .old-price { font-size: 0.85rem; color: #888; text-decoration: line-through; font-weight: 500; }
+        .new-price { font-size: 1.3rem; color: var(--color-accent-gold); font-weight: 900; text-shadow: 0 0 5px rgba(255, 199, 44, 0.3); }
+        
+        .buy-btn {
+            width: 100%; background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border: none; color: white; padding: 10px; border-radius: 6px;
+            font-weight: 800; cursor: pointer; font-size: 0.85rem; font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.3);
         }
+        .buy-btn:active { transform: scale(0.95); }
 
-        /* মোডাল ডিজাইন */
+        /* মোডাল */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-box {
-            background: #1e1e1e;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid var(--color-accent-gold);
-            position: relative;
-            animation: zoomIn 0.3s;
+            background: #1e1e1e; width: 100%; max-width: 380px; border-radius: 12px;
+            padding: 25px; border: 1px solid var(--color-accent-gold); position: relative;
         }
-        @keyframes zoomIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
-
-        .close-icon {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #aaa;
-        }
-
         .form-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #000;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
+            width: 100%; padding: 12px; margin-bottom: 12px; background: #000;
+            border: 1px solid #444; color: white; border-radius: 5px; font-size: 0.9rem;
         }
-        .confirm-order-btn {
-            width: 100%;
-            padding: 12px;
-            background: #25D366; /* WhatsApp Green */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .whatsapp-btn {
+            width: 100%; padding: 12px; background: #25D366; color: white;
+            border: none; border-radius: 5px; font-weight: bold; font-size: 1rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
+        
         /* ফুটার */
         footer {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: rgba(2, 7, 16, 0.95);
-            border-top: 1px solid var(--color-accent-gold);
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #aaa;
-            z-index: 100;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #000; border-top: 2px solid #333;
+            padding: 10px 0; text-align: center; z-index: 100;
         }
+        .palestine-banner {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            padding: 5px; background: #111; margin-bottom: 5px;
+        }
+        .footer-text { font-size: 0.75rem; color: #777; }
     </style>
 </head>
 <body>
 
+    <div id="palestine-popup">
+        <div class="palestine-content">
+            <span style="font-size: 3rem;">🇵🇸</span>
+            <h2 class="support-text">WE SUPPORT</h2>
+            <h1 class="support-text" style="color: #00ffc3; font-size: 3rem;">PALESTINE</h1>
+            <p class="sub-text">FREE PALESTINE</p>
+            <div style="display: flex; justify-content: center;">
+                <div class="countdown-circle" id="countdown">3</div>
+            </div>
+        </div>
+    </div>
+
     <div id="home-screen" class="screen-section active">
         <div class="header-section">
-            <h1>TOUCH NET IP TV</h1>
-            <p class="subtitle">প্রিমিয়াম স্ট্রিমিং এবং গেমিং হাব</p>
+            <h1>LIVE TOUCH TV</h1>
+            <p class="subtitle">PREMIUM GAMING STORE</p>
         </div>
 
-        <div class="main-card-container">
-            <div class="glass-card">
-                <p style="color: var(--color-accent-aqua); font-weight: bold; margin-bottom: 15px; font-size: 1.2rem;">লাইভ টিভি চ্যানেল</p>
-                <button class="launch-btn" id="stream-button">LAUNCH LIVE TV</button>
+        <div class="container">
+            <div class="tv-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: white; font-weight: bold;"><i class="fas fa-satellite-dish"></i> LIVE SERVER</span>
+                    <span style="color: var(--color-accent-aqua); font-size: 0.8rem;">● ONLINE</span>
+                </div>
+                <button class="launch-btn" id="stream-button">WATCH LIVE TV</button>
             </div>
 
-            <div class="glass-card ff-card" onclick="switchScreen('topup-screen')">
-                <div class="ff-content">
-                    <i class="fas fa-fire-alt ff-icon"></i>
-                    <h2 class="ff-title">FREE FIRE TOP UP</h2>
-                    <p class="ff-sub">DIAMOND & MEMBERSHIP SHOP</p>
-                    <div class="click-hint">CLICK TO OPEN STORE</div>
+            <div class="section-title">Touch VIP TOP UP</div>
+
+            <div class="games-grid">
+                <div class="game-card" onclick="loadGameStore('ff')">
+                    <i class="fas fa-fire game-icon" style="color: #ff4500;"></i>
+                    <div class="game-name">Free Fire</div>
+                    <div class="game-sub" style="color: #00ffc3;">UP TO 20% OFF</div>
+                </div>
+
+                <div class="game-card" onclick="loadGameStore('pubg')">
+                    <i class="fas fa-skull-crossbones game-icon" style="color: #fca311;"></i>
+                    <div class="game-name">PUBG Mobile</div>
+                    <div class="game-sub" style="color: #00ffc3;">BIG SAVINGS</div>
+                </div>
+
+                <div class="game-card" onclick="loadGameStore('ef')">
+                    <i class="fas fa-futbol game-icon" style="color: #0099ff;"></i>
+                    <div class="game-name">eFootball</div>
+                    <div class="game-sub" style="color: #00ffc3;">COIN SALE</div>
+                </div>
+
+                <div class="game-card" onclick="loadGameStore('fc')">
+                    <i class="fas fa-shield-alt game-icon" style="color: #00ff00;"></i>
+                    <div class="game-name">FC Mobile</div>
+                    <div class="game-sub" style="color: #00ffc3;">POINTS DEAL</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="topup-screen" class="screen-section">
-        <div class="topup-header">
-            <button class="back-btn" onclick="switchScreen('home-screen')">
-                <i class="fas fa-arrow-left"></i> BACK
-            </button>
-            <div class="store-title">GK PREMIUM SHOP</div>
-            <div style="width: 60px;"></div> </div>
-
-        <div class="products-container">
-            <div class="section-badge">Regular Diamond</div>
-            <div class="grid-layout">
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#00ffff" d="M12 2L2 8L12 22L22 8L12 2Z"/></svg>
-                    </div>
-                    <div class="item-name">115 Diamond</div>
-                    <div class="item-price">৳ ৮৯</div>
-                    <button class="buy-now-btn" onclick="openModal('115 Diamond', '89')">BUY NOW</button>
-                </div>
-                <div class="item-card">
-                    <div class="badge" style="position: absolute; top:0; right:0; background:red; font-size:10px; padding:2px 5px;">HOT</div>
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#00ffff" d="M12 2L2 8L12 22L22 8L12 2Z"/></svg>
-                    </div>
-                    <div class="item-name">240 Diamond</div>
-                    <div class="item-price">৳ ১৬৯</div>
-                    <button class="buy-now-btn" onclick="openModal('240 Diamond', '169')">BUY NOW</button>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#00ffff" d="M12 2L2 8L12 22L22 8L12 2Z"/></svg>
-                    </div>
-                    <div class="item-name">355 Diamond</div>
-                    <div class="item-price">৳ ২৫৯</div>
-                    <button class="buy-now-btn" onclick="openModal('355 Diamond', '259')">BUY NOW</button>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#00ffff" d="M12 2L2 8L12 22L22 8L12 2Z"/></svg>
-                    </div>
-                    <div class="item-name">610 Diamond</div>
-                    <div class="item-price">৳ ৪৪৯</div>
-                    <button class="buy-now-btn" onclick="openModal('610 Diamond', '449')">BUY NOW</button>
-                </div>
-            </div>
-
-            <div class="section-badge">Pass & Membership</div>
-            <div class="grid-layout">
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#FFD700" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 10l-2-4h4l-2 4z"/></svg>
-                    </div>
-                    <div class="item-name">Weekly Membership</div>
-                    <div class="item-price">৳ ১৫৯</div>
-                    <button class="buy-now-btn" onclick="openModal('Weekly Membership', '159')">BUY NOW</button>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#FFC72C" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l5.59-5.59L18 10l-7 7z"/></svg>
-                    </div>
-                    <div class="item-name">Monthly Membership</div>
-                    <div class="item-price">৳ ৭৯৯</div>
-                    <button class="buy-now-btn" onclick="openModal('Monthly Membership', '799')">BUY NOW</button>
-                </div>
-                <div class="item-card">
-                    <div class="item-icon">
-                        <svg viewBox="0 0 24 24"><path fill="#ff4500" d="M12 2L4 20H20L12 2Z"/></svg>
-                    </div>
-                    <div class="item-name">Level Up Pass</div>
-                    <div class="item-price">৳ ১৮৯</div>
-                    <button class="buy-now-btn" onclick="openModal('Level Up Pass', '189')">BUY NOW</button>
-                </div>
-            </div>
+    <div id="store-screen" class="screen-section">
+        <div class="store-header">
+            <button class="back-btn" onclick="switchScreen('home-screen')"><i class="fas fa-arrow-left"></i> BACK</button>
+            <div class="store-title" id="store-page-title">OFFER SHOP</div>
+            <div style="width: 60px;"></div>
         </div>
+
+        <div id="products-container" class="product-grid">
+            </div>
     </div>
 
     <div id="paymentModal" class="modal-overlay">
         <div class="modal-box">
-            <span class="close-icon" onclick="closeModal()">&times;</span>
-            <h3 style="color: var(--color-accent-gold); text-align: center; margin-top: 0;">CONFIRM ORDER</h3>
+            <span style="position: absolute; top: 15px; right: 20px; color: #aaa; cursor: pointer; font-size: 1.5rem;" onclick="closeModal()">&times;</span>
+            <h3 style="color: var(--color-accent-gold); text-align: center; margin-top: 0; font-family: 'Rajdhani';">CONFIRM ORDER</h3>
             
-            <div style="background: #2b2b2b; padding: 10px; border-radius: 5px; border-left: 3px solid var(--color-accent-gold); margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #ccc;">Item:</span>
-                    <span id="modal-pack" style="color: var(--color-accent-aqua); font-weight: bold;"></span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                    <span style="color: #ccc;">Price:</span>
-                    <span style="color: white; font-weight: bold;">৳ <span id="modal-price"></span></span>
-                </div>
-                <hr style="border-color: #444; margin: 10px 0;">
+            <div style="background: #252525; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                <p style="margin: 5px 0; color: #ccc; font-size: 0.9rem;">Item: <span id="m-item" style="color: white; font-weight: bold;">--</span></p>
+                <p style="margin: 5px 0; color: #ccc; font-size: 0.9rem;">Total: <span id="m-price" style="color: var(--color-accent-aqua); font-weight: bold; font-size: 1.1rem;">--</span></p>
+                <hr style="border-color: #444;">
                 <div style="text-align: center;">
-                    <small style="color: #aaa;">Send Money (Bkash/Nagad)</small><br>
+                    <small style="color: #888;">Bkash/Nagad (Send Money)</small><br>
                     <span style="font-size: 1.2rem; color: var(--color-accent-gold); font-weight: bold; letter-spacing: 1px;">01873228584</span>
                 </div>
             </div>
 
             <form onsubmit="processOrder(event)">
-                <input type="number" id="uid" class="form-input" placeholder="Enter Player UID (Game ID)" required>
-                <input type="number" id="lastDigits" class="form-input" placeholder="Sender Number (Last 3 Digits)" required>
-                <input type="text" id="trxid" class="form-input" placeholder="Transaction ID (TrxID)" required>
+                <input type="text" id="playerId" class="form-input" placeholder="Enter Player ID / UID" required>
+                <input type="number" id="senderNum" class="form-input" placeholder="Your Number (Last 3 Digits)" required>
+                <input type="text" id="trxId" class="form-input" placeholder="Transaction ID" required>
                 
-                <button type="submit" class="confirm-order-btn">
-                    <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
+                <button type="submit" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Order Via WhatsApp
                 </button>
             </form>
         </div>
     </div>
 
     <footer>
-        <p>Project Created by: <strong>SH HIMEL</strong> | All Right Reserved © 2028</p>
+        <div class="palestine-banner">
+            <span style="font-size: 1.2rem;">🇵🇸</span>
+            <span style="color: white; font-weight: bold; letter-spacing: 1px;">FREE PALESTINE</span>
+            <span style="font-size: 1.2rem;">🇵🇸</span>
+        </div>
+        <p class="footer-text">Project Created by: <strong>SH HIMEL</strong> | © 2028</p>
     </footer>
 
     <script>
-        // ১. স্ক্রিন সুইচিং লজিক (হোম <-> টপ আপ)
+        // === ১. পপ-আপ লজিক (৩ সেকেন্ড কাউন্টডাউন) ===
+        window.addEventListener('load', function() {
+            let timeLeft = 3;
+            const countdownEl = document.getElementById('countdown');
+            const popup = document.getElementById('palestine-popup');
+
+            const timer = setInterval(function() {
+                timeLeft--;
+                countdownEl.innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(timer);
+                    popup.style.display = 'none'; // অটোমেটিক বন্ধ
+                }
+            }, 1000);
+        });
+
+        // === ২. ডাটাবেস (ডিসকাউন্ট লজিক সহ - ফ্রী ফায়ারে ফালতু আইটেম নেই) ===
+        // oldPrice: আগের দাম (বেশি), price: বর্তমান অফার দাম (কম), off: কত পার্সেন্ট (ম্যানুয়াল)
+        const gameData = {
+            ff: {
+                title: "FF UID TOP-UP (SALE)",
+                placeholder: "Enter UID Code",
+                items: [
+                    { name: "115 Diamonds", oldPrice: 100, price: 89, off: "11%", icon: "fas fa-gem", color: "#00ffff" },
+                    { name: "240 Diamonds", oldPrice: 190, price: 169, off: "12%", icon: "fas fa-gem", color: "#00ffff" },
+                    { name: "355 Diamonds", oldPrice: 280, price: 255, off: "9%", icon: "fas fa-gem", color: "#00ffff" },
+                    { name: "610 Diamonds", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-gem", color: "#00ffff" },
+                    { name: "Weekly Lite", oldPrice: 60, price: 45, off: "25%", icon: "fas fa-bolt", color: "#b3ff00" },
+                    { name: "Weekly Membership", oldPrice: 175, price: 155, off: "12%", icon: "fas fa-crown", color: "#FFD700" },
+                    { name: "Monthly Membership", oldPrice: 850, price: 790, off: "8%", icon: "fas fa-crown", color: "#FFD700" },
+                    { name: "Level Up Pass", oldPrice: 200, price: 185, off: "7%", icon: "fas fa-arrow-up", color: "#ff4500" },
+                    { name: "Weekly + Monthly", oldPrice: 1050, price: 940, off: "10%", icon: "fas fa-star", color: "#FFD700" },
+                    { name: "2x Weekly Mem.", oldPrice: 350, price: 310, off: "12%", icon: "fas fa-crown", color: "#FFD700" }
+                ]
+            },
+            pubg: {
+                title: "PUBG UC (DISCOUNT)",
+                placeholder: "Enter Character ID",
+                items: [
+                    { name: "60 UC", oldPrice: 110, price: 98, off: "11%", icon: "fas fa-coins", color: "#fca311" },
+                    { name: "325 UC", oldPrice: 500, price: 465, off: "7%", icon: "fas fa-coins", color: "#fca311" },
+                    { name: "660 UC", oldPrice: 1000, price: 920, off: "8%", icon: "fas fa-coins", color: "#fca311" },
+                    { name: "1800 UC", oldPrice: 2600, price: 2480, off: "5%", icon: "fas fa-coins", color: "#fca311" },
+                    { name: "Prime Plus", oldPrice: 500, price: 440, off: "12%", icon: "fas fa-crown", color: "#ffffff" },
+                    { name: "RP Activity Pack", oldPrice: 1000, price: 925, off: "8%", icon: "fas fa-box-open", color: "#fca311" }
+                ]
+            },
+            ef: {
+                title: "EFOOTBALL COINS (OFF)",
+                placeholder: "Enter Konami ID/Email",
+                items: [
+                    { name: "130 Coins", oldPrice: 130, price: 118, off: "10%", icon: "fas fa-copyright", color: "#0099ff" },
+                    { name: "550 Coins", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-copyright", color: "#0099ff" },
+                    { name: "1050 Coins", oldPrice: 1000, price: 890, off: "11%", icon: "fas fa-copyright", color: "#0099ff" },
+                    { name: "Messi Pack", oldPrice: 1700, price: 1540, off: "10%", icon: "fas fa-user-tie", color: "#ff0099" },
+                    { name: "Match Pass", oldPrice: 300, price: 245, off: "18%", icon: "fas fa-ticket", color: "#00ff99" }
+                ]
+            },
+            fc: {
+                title: "FC POINTS (SALE)",
+                placeholder: "Enter UID",
+                items: [
+                    { name: "100 FC Points", oldPrice: 120, price: 98, off: "18%", icon: "fas fa-shield-alt", color: "#00ff00" },
+                    { name: "500 FC Points", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-shield-alt", color: "#00ff00" },
+                    { name: "1000 FC Points", oldPrice: 1000, price: 890, off: "11%", icon: "fas fa-shield-alt", color: "#00ff00" },
+                    { name: "Star Pass", oldPrice: 400, price: 345, off: "14%", icon: "fas fa-star", color: "#ffcc00" }
+                ]
+            }
+        };
+
+        let currentSelectedGame = "";
+        const adminPhone = "8801873228584"; 
+
+        // === ৩. ফাংশনস ===
+
         function switchScreen(screenId) {
-            // সব স্ক্রিন থেকে active ক্লাস সরিয়ে ফেলা
-            document.querySelectorAll('.screen-section').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            // নির্দিষ্ট স্ক্রিনে active ক্লাস যোগ করা
+            document.querySelectorAll('.screen-section').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
-            
-            // স্ক্রিন টপে নিয়ে যাওয়া
             window.scrollTo(0, 0);
         }
 
-        // ২. লাইভ টিভি বাটন লজিক
-        const streamBtn = document.getElementById('stream-button');
-        streamBtn.addEventListener('click', function() {
-            this.textContent = "CONNECTING SERVER...";
-            this.style.background = "#FFC72C"; // গোল্ড কালার
+        // কার্ড লোড ফাংশন (নতুন ডিজাইন সহ)
+        function loadGameStore(gameKey) {
+            currentSelectedGame = gameKey;
+            const data = gameData[gameKey];
+            const container = document.getElementById('products-container');
             
-            setTimeout(() => {
-                window.location.href = 'http://redforce.live/'; 
-            }, 1000); 
+            document.getElementById('store-page-title').innerText = data.title;
+            document.getElementById('playerId').placeholder = data.placeholder;
+            container.innerHTML = "";
+
+            data.items.forEach(item => {
+                const html = `
+                    <div class="product-card">
+                        <div class="discount-badge">${item.off} OFF</div>
+                        <i class="${item.icon} p-icon" style="color: ${item.color}"></i>
+                        <span class="p-name">${item.name}</span>
+                        
+                        <div class="price-container">
+                            <span class="old-price">৳${item.oldPrice}</span>
+                            <span class="new-price">৳${item.price}</span>
+                        </div>
+                        
+                        <button class="buy-btn" onclick="openModal('${item.name}', '${item.price}')">BUY NOW</button>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+
+            switchScreen('store-screen');
+        }
+
+        document.getElementById('stream-button').addEventListener('click', function() {
+            this.innerText = "CONNECTING...";
+            this.style.background = "#FFC72C";
+            setTimeout(() => { window.location.href = 'http://redforce.live/'; }, 1000);
         });
 
-        // ৩. অর্ডার মোডাল এবং হোয়াটসঅ্যাপ লজিক
-        let selectedItem = "";
-        let selectedPrice = "";
-        const adminPhone = "8801873228584"; 
-
         function openModal(item, price) {
-            selectedItem = item;
-            selectedPrice = price;
-            document.getElementById('modal-pack').innerText = item;
-            document.getElementById('modal-price').innerText = price;
+            document.getElementById('m-item').innerText = item;
+            document.getElementById('m-price').innerText = price + " TK";
             document.getElementById('paymentModal').style.display = 'flex';
         }
 
@@ -529,41 +450,36 @@
             document.getElementById('paymentModal').style.display = 'none';
         }
 
-        // মোডালের বাইরে ক্লিক করলে বন্ধ হবে
         window.onclick = function(e) {
-            if (e.target == document.getElementById('paymentModal')) {
-                closeModal();
-            }
+            if (e.target == document.getElementById('paymentModal')) closeModal();
         }
 
         function processOrder(e) {
             e.preventDefault();
-            const uid = document.getElementById('uid').value;
-            const lastDigits = document.getElementById('lastDigits').value;
-            const trxid = document.getElementById('trxid').value;
+            const item = document.getElementById('m-item').innerText;
+            const price = document.getElementById('m-price').innerText;
+            const uid = document.getElementById('playerId').value;
+            const sender = document.getElementById('senderNum').value;
+            const trx = document.getElementById('trxId').value;
+            const gameTitle = gameData[currentSelectedGame].title;
 
-            // মেসেজ ফরম্যাটিং
-            const text = `*✅ NEW TOP-UP ORDER* %0A` +
+            const text = `*🔥 NEW ORDER (${gameTitle})* %0A` +
                          `-----------------------------%0A` +
-                         `💎 *Pack:* ${selectedItem} %0A` +
-                         `💰 *Price:* ${selectedPrice} TK %0A` +
+                         `🛒 *Item:* ${item} %0A` +
+                         `💰 *Price:* ${price} %0A` +
                          `-----------------------------%0A` +
-                         `🎮 *UID:* ${uid} %0A` +
-                         `📱 *Sender Last 3:* ${lastDigits} %0A` +
-                         `🧾 *TrxID:* ${trxid} %0A` +
+                         `👤 *ID:* ${uid} %0A` +
+                         `📱 *Sender:* ${sender} %0A` +
+                         `🧾 *TrxID:* ${trx} %0A` +
                          `-----------------------------%0A` +
-                         `Please verify and send diamonds fast!`;
+                         `Deliver ASAP!`;
 
-            // হোয়াটসঅ্যাপ ওপেন
             window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
-            
             closeModal();
-            // ইনপুট রিসেট
-            document.getElementById('uid').value = '';
-            document.getElementById('lastDigits').value = '';
-            document.getElementById('trxid').value = '';
+            document.getElementById('playerId').value = '';
+            document.getElementById('senderNum').value = '';
+            document.getElementById('trxId').value = '';
         }
     </script>
-
 </body>
-</html>
+</html>      
