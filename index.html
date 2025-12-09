@@ -1,485 +1,618 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>ULTIMATE STREAM & STORE | V20.0 PRO</title>
+    <meta name="theme-color" content="#050a14">
+    <title>TOUCH NET PRO | ULTIMATE HUB</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&family=Rajdhani:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600;800&family=Rajdhani:wght@500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* ========================================================================= */
-        /* ১. গ্লোবাল স্টাইলস */
-        /* ========================================================================= */
+        /* =========================================
+           ULTRA MODERN CSS VARIABLES
+           ========================================= */
         :root {
-            --color-deep-blue: #020710;            
-            --color-accent-aqua: #00ffc3;          
-            --color-accent-gold: #FFC72C;
-            --color-discount: #ff3b3b;
-            --bg-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?fit=crop&w=1920&h=1080&q=80');
+            --bg-dark: #020408;
+            --bg-panel: rgba(20, 25, 35, 0.6);
+            --primary: #00f3ff;
+            --secondary: #7000ff;
+            --accent: #ff0055;
+            --success: #00ff9d;
+            --warning: #ffd700;
+            
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            
+            --font-bn: 'Baloo Da 2', sans-serif;
+            --font-tech: 'Rajdhani', sans-serif;
+            --font-display: 'Orbitron', sans-serif;
         }
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
         body {
-            font-family: 'Baloo Da 2', sans-serif; 
-            margin: 0; padding: 0;
-            min-height: 100vh;
-            background-color: var(--color-deep-blue);
-            color: #ECF0F1;
-            background-image: linear-gradient(to top, var(--color-deep-blue) 0%, rgba(2, 7, 16, 0.95) 100%), var(--bg-image);
-            background-size: cover;
-            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: var(--font-bn);
             overflow-x: hidden;
-        }
-
-        /* স্ক্রিন ট্রানজিশন */
-        .screen-section {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-            width: 100%;
             min-height: 100vh;
-            padding-bottom: 120px; /* ফুটারের জন্য জায়গা */
         }
-        .screen-section.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ========================================================================= */
-        /* ২. স্পেশাল ফিলিস্তিন পপ-আপ (Special Requirement) */
-        /* ========================================================================= */
-        #palestine-popup {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999; /* সবার উপরে */
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        /* Moving Mesh Gradient Background */
+        .background-fx {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: 
+                radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 243, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 0, 85, 0.15) 0px, transparent 50%);
+            z-index: -2;
+            filter: blur(40px);
+        }
+
+        /* Grid Pattern Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* =========================================
+           PRELOADER & POPUP
+           ========================================= */
+        #preloader {
+            position: fixed; inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .cyber-spinner {
+            width: 70px; height: 70px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--primary);
+            border-right: 3px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: relative;
+        }
+        .cyber-spinner::after {
+            content: ''; position: absolute; inset: 5px;
+            border: 3px solid transparent;
+            border-bottom: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        #popup-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(20px);
+            z-index: 9000;
+            display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        .popup-content {
             text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* =========================================
+           HEADER & STATUS BAR
+           ========================================= */
+        .glass-header {
+            padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .user-profile {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .avatar {
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
-        .palestine-content {
-            border: 2px solid #fff;
-            padding: 30px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
-            box-shadow: 0 0 50px rgba(0, 153, 0, 0.5); /* ফিলিস্তিন গ্রিন গ্লো */
-            animation: pulse 1.5s infinite;
+        .system-badges {
+            display: flex; gap: 8px;
+        }
+        .sys-badge {
+            background: rgba(255,255,255,0.05);
+            border: var(--glass-border);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: var(--font-tech);
+            display: flex; align-items: center; gap: 6px;
+            color: #ccc;
         }
 
-        .flag-icon { font-size: 4rem; margin-bottom: 15px; display: block; }
-        .support-text { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 900; text-transform: uppercase; color: white; margin: 0; }
-        .sub-text { color: #00ffc3; font-size: 1.2rem; margin-top: 10px; }
-        .countdown-circle {
-            margin-top: 20px; width: 50px; height: 50px; border-radius: 50%;
-            border: 3px solid #ff3b3b; display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.5rem; color: #ff3b3b;
+        /* =========================================
+           MAIN DASHBOARD
+           ========================================= */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 50px;
+        }
+
+        /* Cyber Clock */
+        .cyber-clock-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+        .cyber-clock-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanline 3s infinite linear;
         }
         
-        @keyframes pulse { 0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); } 50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.5); } 100% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); } }
-
-        /* ========================================================================= */
-        /* ৩. হোম স্ক্রিন ডিজাইন */
-        /* ========================================================================= */
-        .header-section { padding-top: 40px; text-align: center; width: 95%; }
-        .header-section h1 {
-            font-family: 'Rajdhani', sans-serif; font-size: 3rem; font-weight: 900;
-            text-transform: uppercase; text-shadow: 0 0 20px var(--color-accent-aqua); margin: 0; letter-spacing: 2px;
+        .time-display {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff, #aebacf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
         }
-        .subtitle { color: var(--color-accent-gold); margin-bottom: 30px; font-weight: 700; text-shadow: 0 0 5px var(--color-accent-gold); }
-
-        .container { width: 92%; max-width: 600px; }
-
-        .tv-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 195, 0.3);
-            border-radius: 15px; padding: 20px;
-            text-align: center; margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(0, 255, 195, 0.1);
-        }
-        .launch-btn {
-            background: var(--color-accent-aqua); border: none; border-radius: 8px;
-            padding: 12px 0; width: 100%; color: var(--color-deep-blue);
-            font-weight: 900; font-size: 1.1em; text-transform: uppercase;
-            box-shadow: 0 0 15px var(--color-accent-aqua); cursor: pointer; transition: 0.3s;
+        .date-display {
+            font-family: var(--font-tech);
+            color: var(--primary);
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 5px;
         }
 
-        /* গেম গ্রিড */
-        .section-title {
-            text-align: left; width: 100%; color: var(--color-accent-gold);
-            font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 800;
-            margin-bottom: 15px; border-bottom: 2px solid var(--color-accent-gold); display: inline-block;
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
+        
+        .span-2 { grid-column: span 2; }
 
-        .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
-
-        .game-card {
-            background: rgba(20, 20, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px; padding: 20px 10px;
+        /* 3D Glass Cards */
+        .tilt-card {
+            background: rgba(20, 25, 35, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            perspective: 1000px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; height: 140px; position: relative; overflow: hidden;
+            min-height: 150px;
         }
-        .game-card:hover { transform: translateY(-5px); border-color: white; }
         
-        .game-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .game-name { font-family: 'Rajdhani', sans-serif; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; color: white; }
-        .game-sub { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
+        .tilt-card:active { transform: scale(0.96); }
 
-        /* ========================================================================= */
-        /* ৪. নতুন স্টোর ডিজাইন (ডিসকাউন্ট UI) */
-        /* ========================================================================= */
-        .store-header {
-            width: 100%; padding: 15px 20px;
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--color-accent-gold);
-            position: sticky; top: 0; z-index: 50;
+        /* Card Content */
+        .card-icon-box {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .back-btn {
-            background: none; border: 1px solid rgba(255,255,255,0.3);
-            color: white; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;
-        }
-
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px; width: 95%; max-width: 800px; padding: 20px 0;
+        
+        .tilt-card:hover .card-icon-box {
+            transform: translateY(-10px) scale(1.1);
         }
 
-        .product-card {
-            background: linear-gradient(160deg, #1a253a 0%, #0d121c 100%); /* প্রিমিয়াম ডার্ক গ্রেডিয়েন্ট */
-            border: 1px solid #2a3b55;
-            border-radius: 12px; padding: 15px; text-align: center;
-            transition: 0.2s; position: relative; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        .card-text {
+            text-align: center;
+            z-index: 2;
         }
-        .product-card:hover { border-color: var(--color-accent-aqua); transform: scale(1.03); box-shadow: 0 0 15px rgba(0, 255, 195, 0.2); }
-        
-        /* ডিসকাউন্ট ব্যাজ ডিজাইন */
-        .discount-badge {
-            position: absolute; top: 0; left: 0;
-            background: linear-gradient(90deg, #ff0000, #ff4d4d);
-            color: white; font-size: 10px; font-weight: 900;
-            padding: 4px 10px; border-bottom-right-radius: 10px;
-            z-index: 10; box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        .card-text h3 {
+            margin: 0; font-family: var(--font-tech);
+            font-size: 1.3rem; text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        .p-icon { font-size: 2rem; margin: 10px 0 5px 0; display: block; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-        .p-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; display: block; color: #fff; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; }
-        
-        /* প্রাইসিং ডিজাইন */
-        .price-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; line-height: 1.2; }
-        .old-price { font-size: 0.85rem; color: #888; text-decoration: line-through; font-weight: 500; }
-        .new-price { font-size: 1.3rem; color: var(--color-accent-gold); font-weight: 900; text-shadow: 0 0 5px rgba(255, 199, 44, 0.3); }
-        
-        .buy-btn {
-            width: 100%; background: linear-gradient(90deg, #00c6ff, #0072ff);
-            border: none; color: white; padding: 10px; border-radius: 6px;
-            font-weight: 800; cursor: pointer; font-size: 0.85rem; font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.3);
+        .card-text p {
+            margin: 5px 0 0; font-size: 0.8rem; color: #8892b0;
         }
-        .buy-btn:active { transform: scale(0.95); }
 
-        /* মোডাল */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        /* Specific Colors */
+        .iptv { --theme: var(--accent); }
+        .cricket { --theme: var(--success); }
+        .football { --theme: var(--warning); }
+        .speed { --theme: var(--primary); }
+
+        .tilt-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                        rgba(255,255,255,0.08) 0%, transparent 50%);
+            opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
         }
-        .modal-box {
-            background: #1e1e1e; width: 100%; max-width: 380px; border-radius: 12px;
-            padding: 25px; border: 1px solid var(--color-accent-gold); position: relative;
+        .tilt-card:hover::after { opacity: 1; }
+        
+        .tilt-card .card-icon-box { color: var(--theme); box-shadow: 0 0 20px var(--theme); opacity: 0.8; }
+        .tilt-card:hover { border-color: var(--theme); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
         }
-        .form-input {
-            width: 100%; padding: 12px; margin-bottom: 12px; background: #000;
-            border: 1px solid #444; color: white; border-radius: 5px; font-size: 0.9rem;
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+        /* Speed Test Special */
+        .speed-card {
+            flex-direction: row; justify-content: space-between; padding: 0 30px;
+            min-height: 90px;
         }
-        .whatsapp-btn {
-            width: 100%; padding: 12px; background: #25D366; color: white;
-            border: none; border-radius: 5px; font-weight: bold; font-size: 1rem;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+
+        /* =========================================
+           NEW FOOTER / CREDITS SECTION
+           ========================================= */
+        .cyber-footer {
+            margin-top: 50px;
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
         }
         
-        /* ফুটার */
-        footer {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000; border-top: 2px solid #333;
-            padding: 10px 0; text-align: center; z-index: 100;
+        .cyber-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.5;
         }
-        .palestine-banner {
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            padding: 5px; background: #111; margin-bottom: 5px;
+
+        .creator-badge {
+            display: inline-block;
+            margin-bottom: 15px;
+            font-family: var(--font-display);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
-        .footer-text { font-size: 0.75rem; color: #777; }
+
+        .creator-name {
+            background: linear-gradient(to right, #00f3ff, #7000ff, #ff0055);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            font-size: 1.2rem;
+            padding: 0 5px;
+            position: relative;
+        }
+        
+        .copyright-text {
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            color: #667;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .copyright-text i { color: var(--success); font-size: 0.8rem; }
+
+        /* Animations */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes scanline { 0% { left: -100%; } 100% { left: 100%; } }
+        
+        .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
-    <div id="palestine-popup">
-        <div class="palestine-content">
-            <span style="font-size: 3rem;">🇵🇸</span>
-            <h2 class="support-text">WE SUPPORT</h2>
-            <h1 class="support-text" style="color: #00ffc3; font-size: 3rem;">PALESTINE</h1>
-            <p class="sub-text">FREE PALESTINE</p>
-            <div style="display: flex; justify-content: center;">
-                <div class="countdown-circle" id="countdown">3</div>
+    <div class="background-fx"></div>
+    <div class="grid-overlay"></div>
+
+    <div id="preloader">
+        <div class="cyber-spinner"></div>
+        <h3 style="margin-top:20px; font-family:var(--font-tech); letter-spacing:3px; color:var(--primary);">SYSTEM INITIALIZING</h3>
+    </div>
+
+    <div id="popup-overlay">
+        <div class="popup-content">
+            <div style="font-size: 5rem; filter: drop-shadow(0 0 30px rgba(228, 49, 43, 0.6)); animation: pulse 1.5s infinite;">🇵🇸</div>
+            <h1 style="font-family: var(--font-display); font-size: 2.5rem; margin: 10px 0; background: linear-gradient(90deg, #E4312b, #fff, #009736); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">SOLIDARITY</h1>
+            <p style="font-family: var(--font-tech); letter-spacing: 2px; color: #ccc;">WE STAND WITH HUMANITY</p>
+        </div>
+    </div>
+
+    <div class="glass-header fade-up" style="animation-delay: 0.1s;">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user-astronaut"></i></div>
+            <div>
+                <div style="font-size: 0.8rem; color: #888; font-family: var(--font-tech);">HELLO, BOSS</div>
+                <div id="greeting-text" style="font-weight: 700;">Welcome Back</div>
+            </div>
+        </div>
+        <div class="system-badges">
+            <div class="sys-badge">
+                <i class="fas fa-bolt" style="color: var(--warning);"></i>
+                <span id="battery-txt">--%</span>
+            </div>
+            <div class="sys-badge" style="border-color: var(--success); background: rgba(0, 255, 157, 0.1);">
+                <i class="fas fa-wifi" style="color: var(--success);"></i>
+                <span>ONLINE</span>
             </div>
         </div>
     </div>
 
-    <div id="home-screen" class="screen-section active">
-        <div class="header-section">
-            <h1>LIVE TOUCH TV</h1>
-            <p class="subtitle">PREMIUM GAMING STORE</p>
-        </div>
-
-        <div class="container">
-            <div class="tv-card">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <span style="color: white; font-weight: bold;"><i class="fas fa-satellite-dish"></i> LIVE SERVER</span>
-                    <span style="color: var(--color-accent-aqua); font-size: 0.8rem;">● ONLINE</span>
-                </div>
-                <button class="launch-btn" id="stream-button">WATCH LIVE TV</button>
-            </div>
-
-            <div class="section-title">Touch VIP TOP UP</div>
-
-            <div class="games-grid">
-                <div class="game-card" onclick="loadGameStore('ff')">
-                    <i class="fas fa-fire game-icon" style="color: #ff4500;"></i>
-                    <div class="game-name">Free Fire</div>
-                    <div class="game-sub" style="color: #00ffc3;">UP TO 20% OFF</div>
-                </div>
-
-                <div class="game-card" onclick="loadGameStore('pubg')">
-                    <i class="fas fa-skull-crossbones game-icon" style="color: #fca311;"></i>
-                    <div class="game-name">PUBG Mobile</div>
-                    <div class="game-sub" style="color: #00ffc3;">BIG SAVINGS</div>
-                </div>
-
-                <div class="game-card" onclick="loadGameStore('ef')">
-                    <i class="fas fa-futbol game-icon" style="color: #0099ff;"></i>
-                    <div class="game-name">eFootball</div>
-                    <div class="game-sub" style="color: #00ffc3;">COIN SALE</div>
-                </div>
-
-                <div class="game-card" onclick="loadGameStore('fc')">
-                    <i class="fas fa-shield-alt game-icon" style="color: #00ff00;"></i>
-                    <div class="game-name">FC Mobile</div>
-                    <div class="game-sub" style="color: #00ffc3;">POINTS DEAL</div>
-                </div>
+    <div class="container">
+        
+        <div class="cyber-clock-box fade-up" style="animation-delay: 0.2s;">
+            <div class="time-display" id="clock">00:00</div>
+            <div class="date-display" id="date">LOADING DATA...</div>
+            <div style="position: absolute; bottom: 10px; right: 15px; font-size: 2rem; opacity: 0.2;">
+                <i class="fas fa-microchip"></i>
             </div>
         </div>
-    </div>
 
-    <div id="store-screen" class="screen-section">
-        <div class="store-header">
-            <button class="back-btn" onclick="switchScreen('home-screen')"><i class="fas fa-arrow-left"></i> BACK</button>
-            <div class="store-title" id="store-page-title">OFFER SHOP</div>
-            <div style="width: 60px;"></div>
-        </div>
-
-        <div id="products-container" class="product-grid">
-            </div>
-    </div>
-
-    <div id="paymentModal" class="modal-overlay">
-        <div class="modal-box">
-            <span style="position: absolute; top: 15px; right: 20px; color: #aaa; cursor: pointer; font-size: 1.5rem;" onclick="closeModal()">&times;</span>
-            <h3 style="color: var(--color-accent-gold); text-align: center; margin-top: 0; font-family: 'Rajdhani';">CONFIRM ORDER</h3>
+        <div class="dashboard-grid">
             
-            <div style="background: #252525; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-                <p style="margin: 5px 0; color: #ccc; font-size: 0.9rem;">Item: <span id="m-item" style="color: white; font-weight: bold;">--</span></p>
-                <p style="margin: 5px 0; color: #ccc; font-size: 0.9rem;">Total: <span id="m-price" style="color: var(--color-accent-aqua); font-weight: bold; font-size: 1.1rem;">--</span></p>
-                <hr style="border-color: #444;">
-                <div style="text-align: center;">
-                    <small style="color: #888;">Bkash/Nagad (Send Money)</small><br>
-                    <span style="font-size: 1.2rem; color: var(--color-accent-gold); font-weight: bold; letter-spacing: 1px;">01873228584</span>
+            <div class="tilt-card span-2 iptv fade-up" style="animation-delay: 0.3s;" onclick="handleLink('http://redforce.live/')">
+                <div class="card-icon-box">
+                    <i class="fas fa-satellite-dish"></i>
+                </div>
+                <div class="card-text">
+                    <h3 style="color: var(--accent);">Live IP TV Server</h3>
+                    <p>Access 5000+ Premium Channels</p>
+                </div>
+                <div style="position: absolute; top: 15px; right: 15px;">
+                    <span style="background: var(--accent); padding: 3px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; color: #fff;">LIVE</span>
                 </div>
             </div>
 
-            <form onsubmit="processOrder(event)">
-                <input type="text" id="playerId" class="form-input" placeholder="Enter Player ID / UID" required>
-                <input type="number" id="senderNum" class="form-input" placeholder="Your Number (Last 3 Digits)" required>
-                <input type="text" id="trxId" class="form-input" placeholder="Transaction ID" required>
-                
-                <button type="submit" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Order Via WhatsApp
-                </button>
-            </form>
-        </div>
-    </div>
+            <div class="tilt-card cricket fade-up" style="animation-delay: 0.4s;" onclick="handleLink('https://www.cricbuzz.com/')">
+                <div class="card-icon-box">
+                    <i class="fas fa-baseball-bat-ball"></i>
+                </div>
+                <div class="card-text">
+                    <h3>Cricket</h3>
+                    <p>Live Scores</p>
+                </div>
+            </div>
 
-    <footer>
-        <div class="palestine-banner">
-            <span style="font-size: 1.2rem;">🇵🇸</span>
-            <span style="color: white; font-weight: bold; letter-spacing: 1px;">FREE PALESTINE</span>
-            <span style="font-size: 1.2rem;">🇵🇸</span>
+            <div class="tilt-card football fade-up" style="animation-delay: 0.5s;" onclick="handleLink('https://www.fotmob.com/')">
+                <div class="card-icon-box">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="card-text">
+                    <h3>Football</h3>
+                    <p>Match Stats</p>
+                </div>
+            </div>
+
+            <div class="tilt-card span-2 speed-card speed fade-up" style="animation-delay: 0.6s;" onclick="handleLink('https://fast.com')">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-gauge-high" style="font-size: 1.8rem; color: var(--primary);"></i>
+                    <div style="text-align: left;">
+                        <h3 style="margin: 0; font-family: var(--font-tech); font-size: 1.2rem;">SPEED TEST</h3>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Check Connection Latency</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-right" style="color: #555;"></i>
+            </div>
+
         </div>
-        <p class="footer-text">Project Created by: <strong>SH HIMEL</strong> | © 2028</p>
-    </footer>
+
+        <div class="fade-up" style="text-align: center; margin-top: 30px; color: #444; font-size: 0.7rem; animation-delay: 0.7s;">
+            <i class="fas fa-shield-alt"></i> SECURE ENCRYPTED CONNECTION
+        </div>
+
+        <div class="cyber-footer fade-up" style="animation-delay: 0.8s;">
+            <div class="creator-badge">
+                PROJECT CREATED BY <span class="creator-name">SH HIMEL</span>
+            </div>
+            <div class="copyright-text">
+                <i class="far fa-copyright"></i> 
+                <span>2023-2029 ALL RIGHTS RESERVED</span>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        // === ১. পপ-আপ লজিক (৩ সেকেন্ড কাউন্টডাউন) ===
-        window.addEventListener('load', function() {
-            let timeLeft = 3;
-            const countdownEl = document.getElementById('countdown');
-            const popup = document.getElementById('palestine-popup');
-
-            const timer = setInterval(function() {
-                timeLeft--;
-                countdownEl.innerText = timeLeft;
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    popup.style.display = 'none'; // অটোমেটিক বন্ধ
-                }
-            }, 1000);
+        // =========================================
+        // CORE LOGIC (OPTIMIZED)
+        // =========================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            startClock();
+            initBattery();
+            initTiltEffect();
         });
 
-        // === ২. ডাটাবেস (ডিসকাউন্ট লজিক সহ - ফ্রী ফায়ারে ফালতু আইটেম নেই) ===
-        // oldPrice: আগের দাম (বেশি), price: বর্তমান অফার দাম (কম), off: কত পার্সেন্ট (ম্যানুয়াল)
-        const gameData = {
-            ff: {
-                title: "FF UID TOP-UP (SALE)",
-                placeholder: "Enter UID Code",
-                items: [
-                    { name: "115 Diamonds", oldPrice: 100, price: 89, off: "11%", icon: "fas fa-gem", color: "#00ffff" },
-                    { name: "240 Diamonds", oldPrice: 190, price: 169, off: "12%", icon: "fas fa-gem", color: "#00ffff" },
-                    { name: "355 Diamonds", oldPrice: 280, price: 255, off: "9%", icon: "fas fa-gem", color: "#00ffff" },
-                    { name: "610 Diamonds", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-gem", color: "#00ffff" },
-                    { name: "Weekly Lite", oldPrice: 60, price: 45, off: "25%", icon: "fas fa-bolt", color: "#b3ff00" },
-                    { name: "Weekly Membership", oldPrice: 175, price: 155, off: "12%", icon: "fas fa-crown", color: "#FFD700" },
-                    { name: "Monthly Membership", oldPrice: 850, price: 790, off: "8%", icon: "fas fa-crown", color: "#FFD700" },
-                    { name: "Level Up Pass", oldPrice: 200, price: 185, off: "7%", icon: "fas fa-arrow-up", color: "#ff4500" },
-                    { name: "Weekly + Monthly", oldPrice: 1050, price: 940, off: "10%", icon: "fas fa-star", color: "#FFD700" },
-                    { name: "2x Weekly Mem.", oldPrice: 350, price: 310, off: "12%", icon: "fas fa-crown", color: "#FFD700" }
-                ]
-            },
-            pubg: {
-                title: "PUBG UC (DISCOUNT)",
-                placeholder: "Enter Character ID",
-                items: [
-                    { name: "60 UC", oldPrice: 110, price: 98, off: "11%", icon: "fas fa-coins", color: "#fca311" },
-                    { name: "325 UC", oldPrice: 500, price: 465, off: "7%", icon: "fas fa-coins", color: "#fca311" },
-                    { name: "660 UC", oldPrice: 1000, price: 920, off: "8%", icon: "fas fa-coins", color: "#fca311" },
-                    { name: "1800 UC", oldPrice: 2600, price: 2480, off: "5%", icon: "fas fa-coins", color: "#fca311" },
-                    { name: "Prime Plus", oldPrice: 500, price: 440, off: "12%", icon: "fas fa-crown", color: "#ffffff" },
-                    { name: "RP Activity Pack", oldPrice: 1000, price: 925, off: "8%", icon: "fas fa-box-open", color: "#fca311" }
-                ]
-            },
-            ef: {
-                title: "EFOOTBALL COINS (OFF)",
-                placeholder: "Enter Konami ID/Email",
-                items: [
-                    { name: "130 Coins", oldPrice: 130, price: 118, off: "10%", icon: "fas fa-copyright", color: "#0099ff" },
-                    { name: "550 Coins", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-copyright", color: "#0099ff" },
-                    { name: "1050 Coins", oldPrice: 1000, price: 890, off: "11%", icon: "fas fa-copyright", color: "#0099ff" },
-                    { name: "Messi Pack", oldPrice: 1700, price: 1540, off: "10%", icon: "fas fa-user-tie", color: "#ff0099" },
-                    { name: "Match Pass", oldPrice: 300, price: 245, off: "18%", icon: "fas fa-ticket", color: "#00ff99" }
-                ]
-            },
-            fc: {
-                title: "FC POINTS (SALE)",
-                placeholder: "Enter UID",
-                items: [
-                    { name: "100 FC Points", oldPrice: 120, price: 98, off: "18%", icon: "fas fa-shield-alt", color: "#00ff00" },
-                    { name: "500 FC Points", oldPrice: 500, price: 445, off: "11%", icon: "fas fa-shield-alt", color: "#00ff00" },
-                    { name: "1000 FC Points", oldPrice: 1000, price: 890, off: "11%", icon: "fas fa-shield-alt", color: "#00ff00" },
-                    { name: "Star Pass", oldPrice: 400, price: 345, off: "14%", icon: "fas fa-star", color: "#ffcc00" }
-                ]
+        // 1. App Initialization Sequence
+        function initApp() {
+            const preloader = document.getElementById('preloader');
+            const popup = document.getElementById('popup-overlay');
+            const content = document.querySelector('.popup-content');
+
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 600);
+                
+                // Show Popup
+                popup.style.display = 'flex';
+                setTimeout(() => {
+                    popup.style.opacity = '1';
+                    content.style.transform = 'scale(1)';
+                }, 50);
+
+                // Hide Popup Auto
+                setTimeout(() => {
+                    popup.style.opacity = '0';
+                    content.style.transform = 'scale(0.8)';
+                    setTimeout(() => popup.style.display = 'none', 500);
+                }, 3500);
+
+            }, 1200);
+        }
+
+        // 2. High Performance Clock & Greeting
+        function startClock() {
+            const clockEl = document.getElementById('clock');
+            const dateEl = document.getElementById('date');
+            const greetEl = document.getElementById('greeting-text');
+
+            function update() {
+                const now = new Date();
+                
+                // Time
+                let hours = now.getHours();
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const secs = String(now.getSeconds()).padStart(2, '0');
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12 || 12;
+                
+                clockEl.innerHTML = `${hours}:${mins}<span style="font-size:1.5rem;color:var(--primary)">:${secs}</span> <span style="font-size:1rem;color:#666">${ampm}</span>`;
+
+                // Date (Bengali)
+                const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                dateEl.innerText = now.toLocaleDateString('bn-BD', options);
+
+                // Greeting
+                const h = now.getHours();
+                if (h < 12) greetEl.innerText = "শুভ সকাল";
+                else if (h < 17) greetEl.innerText = "শুভ দুপুর";
+                else if (h < 20) greetEl.innerText = "শুভ সন্ধ্যা";
+                else greetEl.innerText = "শুভ রাত্রি";
             }
-        };
-
-        let currentSelectedGame = "";
-        const adminPhone = "8801873228584"; 
-
-        // === ৩. ফাংশনস ===
-
-        function switchScreen(screenId) {
-            document.querySelectorAll('.screen-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            window.scrollTo(0, 0);
+            setInterval(update, 1000);
+            update();
         }
 
-        // কার্ড লোড ফাংশন (নতুন ডিজাইন সহ)
-        function loadGameStore(gameKey) {
-            currentSelectedGame = gameKey;
-            const data = gameData[gameKey];
-            const container = document.getElementById('products-container');
+        // 3. Battery Status API
+        function initBattery() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(battery => {
+                    const updateBattery = () => {
+                        const level = Math.round(battery.level * 100);
+                        document.getElementById('battery-txt').innerHTML = `${level}%`;
+                    };
+                    updateBattery();
+                    battery.addEventListener('levelchange', updateBattery);
+                });
+            } else {
+                document.getElementById('battery-txt').innerText = "100%";
+            }
+        }
+
+        // 4. Ripple & Link Handler
+        function handleLink(url) {
+            // Haptic Feedback
+            if(navigator.vibrate) navigator.vibrate(40);
             
-            document.getElementById('store-page-title').innerText = data.title;
-            document.getElementById('playerId').placeholder = data.placeholder;
-            container.innerHTML = "";
+            // Ripple Effect Logic
+            const card = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(card.clientWidth, card.clientHeight);
+            const radius = diameter / 2;
 
-            data.items.forEach(item => {
-                const html = `
-                    <div class="product-card">
-                        <div class="discount-badge">${item.off} OFF</div>
-                        <i class="${item.icon} p-icon" style="color: ${item.color}"></i>
-                        <span class="p-name">${item.name}</span>
-                        
-                        <div class="price-container">
-                            <span class="old-price">৳${item.oldPrice}</span>
-                            <span class="new-price">৳${item.price}</span>
-                        </div>
-                        
-                        <button class="buy-btn" onclick="openModal('${item.name}', '${item.price}')">BUY NOW</button>
-                    </div>
-                `;
-                container.innerHTML += html;
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - card.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - card.getBoundingClientRect().top - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = card.getElementsByClassName('ripple')[0];
+            if (ripple) ripple.remove();
+
+            card.appendChild(circle);
+
+            // Delay for animation then open
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 300);
+        }
+
+        // 5. 3D Tilt Effect Logic (Desktop Only Optimization)
+        function initTiltEffect() {
+            const cards = document.querySelectorAll('.tilt-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5; // Max -5deg to 5deg
+                    const rotateY = ((x - centerX) / centerX) * 5;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                    card.style.opacity = '1';
+                });
             });
-
-            switchScreen('store-screen');
         }
 
-        document.getElementById('stream-button').addEventListener('click', function() {
-            this.innerText = "CONNECTING...";
-            this.style.background = "#FFC72C";
-            setTimeout(() => { window.location.href = 'http://redforce.live/'; }, 1000);
-        });
+        // Pulse Animation CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        `;
+        document.head.appendChild(style);
 
-        function openModal(item, price) {
-            document.getElementById('m-item').innerText = item;
-            document.getElementById('m-price').innerText = price + " TK";
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
-
-        window.onclick = function(e) {
-            if (e.target == document.getElementById('paymentModal')) closeModal();
-        }
-
-        function processOrder(e) {
-            e.preventDefault();
-            const item = document.getElementById('m-item').innerText;
-            const price = document.getElementById('m-price').innerText;
-            const uid = document.getElementById('playerId').value;
-            const sender = document.getElementById('senderNum').value;
-            const trx = document.getElementById('trxId').value;
-            const gameTitle = gameData[currentSelectedGame].title;
-
-            const text = `*🔥 NEW ORDER (${gameTitle})* %0A` +
-                         `-----------------------------%0A` +
-                         `🛒 *Item:* ${item} %0A` +
-                         `💰 *Price:* ${price} %0A` +
-                         `-----------------------------%0A` +
-                         `👤 *ID:* ${uid} %0A` +
-                         `📱 *Sender:* ${sender} %0A` +
-                         `🧾 *TrxID:* ${trx} %0A` +
-                         `-----------------------------%0A` +
-                         `Deliver ASAP!`;
-
-            window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
-            closeModal();
-            document.getElementById('playerId').value = '';
-            document.getElementById('senderNum').value = '';
-            document.getElementById('trxId').value = '';
-        }
     </script>
 </body>
-</html>      
+</html>
