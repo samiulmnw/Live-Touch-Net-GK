@@ -3,616 +3,507 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#050a14">
-    <title>TOUCH NET PRO | ULTIMATE HUB</title>
+    <title>LIVE  TOUCH  PRO | SH HIMEL</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600;800&family=Rajdhani:wght@500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* =========================================
-           ULTRA MODERN CSS VARIABLES
-           ========================================= */
+        /* ================= VARIABLES & RESETS ================= */
         :root {
-            --bg-dark: #020408;
-            --bg-panel: rgba(20, 25, 35, 0.6);
             --primary: #00f3ff;
             --secondary: #7000ff;
             --accent: #ff0055;
-            --success: #00ff9d;
-            --warning: #ffd700;
-            
-            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            
-            --font-bn: 'Baloo Da 2', sans-serif;
-            --font-tech: 'Rajdhani', sans-serif;
+            --bg-dark: #050a10;
+            --glass: rgba(16, 26, 41, 0.85); /* Slightly less opaque for more shine */
+            --border: 1px solid rgba(255, 255, 255, 0.2); /* Thicker border for shine */
+            --font-main: 'Rajdhani', sans-serif;
             --font-display: 'Orbitron', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; outline: none; }
+        
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-dark);
             color: #fff;
-            font-family: var(--font-bn);
-            overflow-x: hidden;
-            min-height: 100vh;
+            font-family: var(--font-main);
+            overflow: hidden; 
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* Moving Mesh Gradient Background */
-        .background-fx {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: 
-                radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(0, 243, 255, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 0, 85, 0.15) 0px, transparent 50%);
-            z-index: -2;
-            filter: blur(40px);
+        /* Canvas Background */
+        #particles-js {
+            position: absolute; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at center, #1a1f2e 0%, #000 100%);
         }
 
-        /* Grid Pattern Overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
-            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-        }
-
-        /* =========================================
-           PRELOADER & POPUP
-           ========================================= */
-        #preloader {
-            position: fixed; inset: 0;
-            background: #000;
-            z-index: 9999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .cyber-spinner {
-            width: 70px; height: 70px;
-            border: 3px solid transparent;
-            border-top: 3px solid var(--primary);
-            border-right: 3px solid var(--secondary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            position: relative;
-        }
-        .cyber-spinner::after {
-            content: ''; position: absolute; inset: 5px;
-            border: 3px solid transparent;
-            border-bottom: 3px solid var(--accent);
-            border-radius: 50%;
-            animation: spin 1.5s linear infinite reverse;
-        }
-
-        #popup-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(20px);
-            z-index: 9000;
-            display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.5s ease;
-        }
-        .popup-content {
-            text-align: center;
-            transform: scale(0.8);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* =========================================
-           HEADER & STATUS BAR
-           ========================================= */
-        .glass-header {
-            padding: 15px 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
-            position: sticky; top: 0; z-index: 100;
-        }
-
-        .user-profile {
-            display: flex; align-items: center; gap: 12px;
-        }
-        .avatar {
-            width: 45px; height: 45px;
-            border-radius: 12px;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; font-size: 1.2rem;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .system-badges {
-            display: flex; gap: 8px;
-        }
-        .sys-badge {
-            background: rgba(255,255,255,0.05);
-            border: var(--glass-border);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-family: var(--font-tech);
-            display: flex; align-items: center; gap: 6px;
-            color: #ccc;
-        }
-
-        /* =========================================
-           MAIN DASHBOARD
-           ========================================= */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 50px;
-        }
-
-        /* Cyber Clock */
-        .cyber-clock-box {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.02);
-            border: var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0 35px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-        }
-        .cyber-clock-box::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: scanline 3s infinite linear;
-        }
-        
-        .time-display {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(to bottom, #fff, #aebacf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
-        }
-        .date-display {
-            font-family: var(--font-tech);
-            color: var(--primary);
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        /* Grid Layout */
-        .dashboard-grid {
+        /* ================= UI LAYOUT (Enhanced Glass) ================= */
+        .app-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-rows: 60px 1fr 40px;
+            height: 100vh;
+            backdrop-filter: blur(10px); /* Increased for more glassy effect */
         }
-        
-        .span-2 { grid-column: span 2; }
 
-        /* 3D Glass Cards */
-        .tilt-card {
-            background: rgba(20, 25, 35, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 25px 20px;
-            position: relative;
+        /* Header */
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+            background: rgba(0,0,0,0.7);
+            border-bottom: var(--border);
+            z-index: 10;
+        }
+        .logo { font-family: var(--font-display); font-size: 1.2rem; color: var(--primary); letter-spacing: 2px; }
+        .system-stats { display: flex; gap: 15px; font-family: var(--font-mono); font-size: 0.9rem; color: #aaa; }
+
+        /* Main Content Area */
+        .main-workspace {
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 150px;
+            position: relative;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: var(--glass);
+            border-radius: 15px;
+            border: var(--border);
+            padding: 20px;
+            display: flex; flex-direction: column; gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        .nav-btn {
+            background: transparent; border: none; color: #fff;
+            padding: 12px; text-align: left; font-size: 1.1rem;
+            cursor: pointer; border-radius: 8px;
+            transition: 0.3s; display: flex; align-items: center; gap: 10px;
+            font-family: var(--font-main);
+        }
+        .nav-btn:hover, .nav-btn.active { background: rgba(0, 243, 255, 0.2); color: var(--primary); border-left: 3px solid var(--primary); }
+
+        /* Center Dashboard */
+        .dashboard {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .dashboard::-webkit-scrollbar { width: 5px; }
+        .dashboard::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+
+        /* Search Bar */
+        .search-box {
+            position: relative; margin-bottom: 25px;
+        }
+        .search-input {
+            width: 100%; background: rgba(255,255,255,0.08); /* Slightly lighter background */
+            border: var(--border);
+            padding: 15px 50px 15px 20px; color: #fff; font-size: 1.1rem; border-radius: 50px;
+            font-family: var(--font-main); transition: 0.3s;
+        }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); } /* Stronger glow */
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--primary); cursor: pointer;}
+
+        /* App Grid */
+        .grid-section-title { font-family: var(--font-display); margin: 20px 0 10px; color: #888; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        
+        .app-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px;
         }
         
-        .tilt-card:active { transform: scale(0.96); }
+        .app-card {
+            background: rgba(255,255,255,0.05); /* Slightly lighter */
+            border: var(--border);
+            padding: 20px; border-radius: 15px; text-align: center; cursor: pointer;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Subtle initial shadow */
+        }
+        .app-card::before {
+            content: ''; position: absolute; top:0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); /* Stronger hover shine */
+            transition: 0.5s;
+        }
+        .app-card:hover::before { left: 100%; }
+        .app-card:hover { transform: translateY(-7px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2), 0 0 20px var(--primary); } /* More lift and glow */
+        .app-icon { font-size: 2.2rem; margin-bottom: 10px; color: var(--accent); }
+        .app-name { font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; }
 
-        /* Card Content */
-        .card-icon-box {
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.03);
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .tilt-card:hover .card-icon-box {
-            transform: translateY(-10px) scale(1.1);
-        }
-
-        .card-text {
-            text-align: center;
-            z-index: 2;
-        }
-        .card-text h3 {
-            margin: 0; font-family: var(--font-tech);
-            font-size: 1.3rem; text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .card-text p {
-            margin: 5px 0 0; font-size: 0.8rem; color: #8892b0;
+        /* Right Widget Panel */
+        .widgets-panel {
+            display: flex; flex-direction: column; gap: 20px;
         }
 
-        /* Specific Colors */
-        .iptv { --theme: var(--accent); }
-        .cricket { --theme: var(--success); }
-        .football { --theme: var(--warning); }
-        .speed { --theme: var(--primary); }
-
-        .tilt-card::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                        rgba(255,255,255,0.08) 0%, transparent 50%);
-            opacity: 0; transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        .tilt-card:hover::after { opacity: 1; }
-        
-        .tilt-card .card-icon-box { color: var(--theme); box-shadow: 0 0 20px var(--theme); opacity: 0.8; }
-        .tilt-card:hover { border-color: var(--theme); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
-
-        /* Ripple Effect */
-        .ripple {
-            position: absolute; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            animation: ripple-anim 0.6s linear;
-            pointer-events: none;
-        }
-        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
-
-        /* Speed Test Special */
-        .speed-card {
-            flex-direction: row; justify-content: space-between; padding: 0 30px;
-            min-height: 90px;
-        }
-
-        /* =========================================
-           NEW FOOTER / CREDITS SECTION
-           ========================================= */
-        .cyber-footer {
-            margin-top: 50px;
-            padding: 30px 0;
-            text-align: center;
+        .widget {
+            background: var(--glass); border: var(--border); border-radius: 15px; padding: 15px;
             position: relative;
         }
         
-        .cyber-footer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 10%; right: 10%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0.5;
+        /* Clock Widget */
+        .clock-widget { text-align: center; }
+        .digital-time { font-family: var(--font-display); font-size: 2.5rem; background: -webkit-linear-gradient(#fff, #ccc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .date-text { color: var(--primary); font-size: 0.9rem; letter-spacing: 2px; }
+
+        /* Footer (Restored Scrolling) */
+        .news-bar {
+            background: #000; border-top: 1px solid var(--primary);
+            display: flex; align-items: center; overflow: hidden; white-space: nowrap;
+        }
+        .news-label { background: var(--primary); color: #000; padding: 0 15px; font-weight: bold; height: 100%; display: flex; align-items: center; z-index: 2; }
+        .news-scroller { display: inline-block; padding-left: 100%; animation: scroll 25s linear infinite; color: var(--primary); font-family: var(--font-mono); font-weight: 600; text-shadow: 0 0 5px rgba(0, 243, 255, 0.5); }
+        @keyframes scroll { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+        /* Modal (Settings & Startup) */
+        .modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100;
+            justify-content: center; align-items: center; backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: #111; border: 1px solid var(--primary); padding: 30px; border-radius: 10px;
+            width: 90%; max-width: 500px; text-align: center;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .creator-badge {
-            display: inline-block;
-            margin-bottom: 15px;
-            font-family: var(--font-display);
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        /* STARTUP POPUP (Palestine) */
+        #startup-popup {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0.95);
+            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(20px);
+            transition: opacity 1s ease;
         }
-
-        .creator-name {
-            background: linear-gradient(to right, #00f3ff, #7000ff, #ff0055);
+        .startup-content {
+            text-align: center;
+            border: 2px solid var(--accent);
+            padding: 40px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #1a0505, #000);
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.5);
+            animation: pulse 2s infinite;
+        }
+        .flag-heart {
+            font-size: 4rem;
+            background: -webkit-linear-gradient(#000, #009736, #fff, #E4312b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            font-size: 1.2rem;
-            padding: 0 5px;
-            position: relative;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.7));
         }
-        
-        .copyright-text {
-            font-family: var(--font-tech);
-            font-size: 0.75rem;
-            color: #667;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .copyright-text i { color: var(--success); font-size: 0.8rem; }
+        @keyframes pulse { 0% { transform: scale(0.95); } 50% { transform: scale(1.05); } 100% { transform: scale(0.95); } }
 
-        /* Animations */
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes scanline { 0% { left: -100%; } 100% { left: 100%; } }
-        
-        .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-workspace { grid-template-columns: 1fr; overflow-y: scroll; display: block; }
+            .sidebar, .widgets-panel { display: none; } 
+            
+            /* Mobile Sidebar */
+            .sidebar.active { 
+                display: flex; position: absolute; z-index: 50; 
+                top: 0; left: 0; bottom: 0; width: 75%; 
+                background: rgba(5, 10, 16, 0.98);
+                border-right: 1px solid var(--primary);
+                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+                animation: slideIn 0.3s ease-out;
+            }
+            @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+            
+            /* Overlay for clicking outside */
+            .sidebar-overlay {
+                display: none; position: absolute; inset: 0; z-index: 40; background: rgba(0,0,0,0.5);
+            }
+            .sidebar-overlay.active { display: block; }
+            
+            .mobile-menu-btn { display: block !important; }
+            
+            .widgets-panel { 
+                display: block; margin-top: 20px; 
+            }
+        }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--primary); cursor: pointer; }
 
     </style>
 </head>
 <body>
 
-    <div class="background-fx"></div>
-    <div class="grid-overlay"></div>
+    <canvas id="particles-js"></canvas>
 
-    <div id="preloader">
-        <div class="cyber-spinner"></div>
-        <h3 style="margin-top:20px; font-family:var(--font-tech); letter-spacing:3px; color:var(--primary);">SYSTEM INITIALIZING</h3>
-    </div>
-
-    <div id="popup-overlay">
-        <div class="popup-content">
-            <div style="font-size: 5rem; filter: drop-shadow(0 0 30px rgba(228, 49, 43, 0.6)); animation: pulse 1.5s infinite;">🇵🇸</div>
-            <h1 style="font-family: var(--font-display); font-size: 2.5rem; margin: 10px 0; background: linear-gradient(90deg, #E4312b, #fff, #009736); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">SOLIDARITY</h1>
-            <p style="font-family: var(--font-tech); letter-spacing: 2px; color: #ccc;">WE STAND WITH HUMANITY</p>
+    <div id="startup-popup">
+        <div class="startup-content">
+            <i class="fas fa-hand-holding-heart flag-heart"></i>
+            <h2 style="font-family: 'Orbitron'; letter-spacing: 3px; color: #fff; margin-bottom: 10px;">WE SUPPORT</h2>
+            <h1 style="font-family: 'Rajdhani'; font-size: 3rem; color: #E4312b; text-shadow: 0 0 20px red;">PALESTINE 🇵🇸</h1>
+            <p style="color: #aaa; margin-top: 15px; font-size: 0.8rem;">SYSTEM INITIALIZING...</p>
         </div>
     </div>
 
-    <div class="glass-header fade-up" style="animation-delay: 0.1s;">
-        <div class="user-profile">
-            <div class="avatar"><i class="fas fa-user-astronaut"></i></div>
-            <div>
-                <div style="font-size: 0.8rem; color: #888; font-family: var(--font-tech);">HELLO, BOSS</div>
-                <div id="greeting-text" style="font-weight: 700;">Welcome Back</div>
+    <div class="app-container">
+        <header class="top-bar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars mobile-menu-btn" onclick="toggleMenu()"></i>
+                <div class="logo"><i class="fas fa-fingerprint"></i> LIVE TOUCH PRO</div>
             </div>
-        </div>
-        <div class="system-badges">
-            <div class="sys-badge">
-                <i class="fas fa-bolt" style="color: var(--warning);"></i>
-                <span id="battery-txt">--%</span>
+            <div class="system-stats">
+                <span id="battery-stat"><i class="fas fa-battery-three-quarters"></i> 98%</span> 
             </div>
-            <div class="sys-badge" style="border-color: var(--success); background: rgba(0, 255, 157, 0.1);">
-                <i class="fas fa-wifi" style="color: var(--success);"></i>
-                <span>ONLINE</span>
-            </div>
-        </div>
-    </div>
+        </header>
 
-    <div class="container">
-        
-        <div class="cyber-clock-box fade-up" style="animation-delay: 0.2s;">
-            <div class="time-display" id="clock">00:00</div>
-            <div class="date-display" id="date">LOADING DATA...</div>
-            <div style="position: absolute; bottom: 10px; right: 15px; font-size: 2rem; opacity: 0.2;">
-                <i class="fas fa-microchip"></i>
-            </div>
-        </div>
-
-        <div class="dashboard-grid">
+        <div class="main-workspace">
             
-            <div class="tilt-card span-2 iptv fade-up" style="animation-delay: 0.3s;" onclick="handleLink('http://redforce.live/')">
-                <div class="card-icon-box">
-                    <i class="fas fa-satellite-dish"></i>
-                </div>
-                <div class="card-text">
-                    <h3 style="color: var(--accent);">Live IP TV Server</h3>
-                    <p>Access 5000+ Premium Channels</p>
-                </div>
-                <div style="position: absolute; top: 15px; right: 15px;">
-                    <span style="background: var(--accent); padding: 3px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; color: #fff;">LIVE</span>
-                </div>
-            </div>
+            <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
 
-            <div class="tilt-card cricket fade-up" style="animation-delay: 0.4s;" onclick="handleLink('https://www.cricbuzz.com/')">
-                <div class="card-icon-box">
-                    <i class="fas fa-baseball-bat-ball"></i>
+            <nav class="sidebar" id="sidebar">
+                <button class="nav-btn active" onclick="filterApps('all')"><i class="fas fa-th-large"></i> Dashboard</button>
+                <button class="nav-btn" onclick="filterApps('tv')"><i class="fas fa-satellite-dish"></i> Live TV</button>
+                <button class="nav-btn" onclick="filterApps('sports')"><i class="fas fa-trophy"></i> Sports</button>
+                <div style="margin-top: auto; border-top: 1px solid #333; padding-top: 10px;">
+                    <button class="nav-btn" onclick="openSettings()"><i class="fas fa-cog"></i> Settings</button>
                 </div>
-                <div class="card-text">
-                    <h3>Cricket</h3>
-                    <p>Live Scores</p>
-                </div>
-            </div>
+            </nav>
 
-            <div class="tilt-card football fade-up" style="animation-delay: 0.5s;" onclick="handleLink('https://www.fotmob.com/')">
-                <div class="card-icon-box">
-                    <i class="fas fa-futbol"></i>
+            <main class="dashboard">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search Web or Enter URL..." onkeypress="handleSearch(event)">
+                    <i class="fas fa-search search-icon" onclick="executeSearch()"></i>
                 </div>
-                <div class="card-text">
-                    <h3>Football</h3>
-                    <p>Match Stats</p>
-                </div>
-            </div>
 
-            <div class="tilt-card span-2 speed-card speed fade-up" style="animation-delay: 0.6s;" onclick="handleLink('https://fast.com')">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <i class="fas fa-gauge-high" style="font-size: 1.8rem; color: var(--primary);"></i>
-                    <div style="text-align: left;">
-                        <h3 style="margin: 0; font-family: var(--font-tech); font-size: 1.2rem;">SPEED TEST</h3>
-                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Check Connection Latency</p>
+                <div id="apps-container" class="app-grid">
                     </div>
+            </main>
+
+            <aside class="widgets-panel">
+                <div class="widget clock-widget">
+                    <div class="digital-time" id="clock">00:00</div>
+                    <div class="date-text" id="date">LOADING</div>
                 </div>
-                <i class="fas fa-arrow-right" style="color: #555;"></i>
-            </div>
-
+                
+                </aside>
         </div>
 
-        <div class="fade-up" style="text-align: center; margin-top: 30px; color: #444; font-size: 0.7rem; animation-delay: 0.7s;">
-            <i class="fas fa-shield-alt"></i> SECURE ENCRYPTED CONNECTION
-        </div>
-
-        <div class="cyber-footer fade-up" style="animation-delay: 0.8s;">
-            <div class="creator-badge">
-                PROJECT CREATED BY <span class="creator-name">SH HIMEL</span>
+        <footer class="news-bar">
+            <div class="news-label">COPYRIGHT</div>
+            <div class="news-scroller" id="news-ticker">
+                PROJECT CREATED BY SH HIMEL | COPYRIGHT ALL RIGHTS RESERVED 2023-2029 | LIVE TOUCH PRO ULTIMATE OS 
             </div>
-            <div class="copyright-text">
-                <i class="far fa-copyright"></i> 
-                <span>2023-2029 ALL RIGHTS RESERVED</span>
-            </div>
-        </div>
+        </footer>
+    </div>
 
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">SYSTEM SETTINGS</h2>
+            <p>Theme Color:</p>
+            <div style="display: flex; justify-content: center; gap: 10px; margin: 15px 0;">
+                <div style="width: 30px; height: 30px; background: #00f3ff; border-radius: 50%; cursor: pointer;" onclick="setTheme('#00f3ff')"></div>
+                <div style="width: 30px; height: 30px; background: #ff0055; border-radius: 50%; cursor: pointer;" onclick="setTheme('#ff0055')"></div>
+                <div style="width: 30px; height: 30px; background: #00ff9d; border-radius: 50%; cursor: pointer;" onclick="setTheme('#00ff9d')"></div>
+                <div style="width: 30px; height: 30px; background: #ffd700; border-radius: 50%; cursor: pointer;" onclick="setTheme('#ffd700')"></div>
+            </div>
+            <button onclick="document.getElementById('settings-modal').style.display='none'" style="background: #333; color: white; border: none; padding: 10px 30px; margin-top: 20px; cursor: pointer;">CLOSE</button>
+        </div>
     </div>
 
     <script>
-        // =========================================
-        // CORE LOGIC (OPTIMIZED)
-        // =========================================
-        
+        // ================= CONFIG & DATA =================
+        const appsData = [
+            { name: "Live IP TV", icon: "fa-satellite-dish", cat: "tv", url: "http://redforce.live/", color: "#ff0055" },
+            { name: "Cricbuzz", icon: "fa-baseball-bat-ball", cat: "sports", url: "https://www.cricbuzz.com/", color: "#00ff9d" },
+            { name: "FotMob", icon: "fa-futbol", cat: "sports", url: "https://www.fotmob.com/", color: "#ffd700" },
+            { name: "Live Score", icon: "fa-stopwatch", cat: "sports", url: "https://www.livescore.com/", color: "#ff8800" }
+        ];
+
+        // ================= APP INITIALIZATION =================
         document.addEventListener('DOMContentLoaded', () => {
-            initApp();
+            renderApps('all');
+            initCanvas();
             startClock();
-            initBattery();
-            initTiltEffect();
+            handleStartup();
+            getRealBatteryStatus(); // Added real-time battery status fetch
         });
 
-        // 1. App Initialization Sequence
-        function initApp() {
-            const preloader = document.getElementById('preloader');
-            const popup = document.getElementById('popup-overlay');
-            const content = document.querySelector('.popup-content');
-
+        // ================= STARTUP LOGIC =================
+        function handleStartup() {
             setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 600);
-                
-                // Show Popup
-                popup.style.display = 'flex';
+                const popup = document.getElementById('startup-popup');
+                popup.style.opacity = '0';
                 setTimeout(() => {
-                    popup.style.opacity = '1';
-                    content.style.transform = 'scale(1)';
-                }, 50);
-
-                // Hide Popup Auto
-                setTimeout(() => {
-                    popup.style.opacity = '0';
-                    content.style.transform = 'scale(0.8)';
-                    setTimeout(() => popup.style.display = 'none', 500);
-                }, 3500);
-
-            }, 1200);
+                    popup.style.display = 'none';
+                }, 1000);
+            }, 3000); // 3 Seconds Display
         }
 
-        // 2. High Performance Clock & Greeting
-        function startClock() {
-            const clockEl = document.getElementById('clock');
-            const dateEl = document.getElementById('date');
-            const greetEl = document.getElementById('greeting-text');
-
-            function update() {
-                const now = new Date();
-                
-                // Time
-                let hours = now.getHours();
-                const mins = String(now.getMinutes()).padStart(2, '0');
-                const secs = String(now.getSeconds()).padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12 || 12;
-                
-                clockEl.innerHTML = `${hours}:${mins}<span style="font-size:1.5rem;color:var(--primary)">:${secs}</span> <span style="font-size:1rem;color:#666">${ampm}</span>`;
-
-                // Date (Bengali)
-                const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-                dateEl.innerText = now.toLocaleDateString('bn-BD', options);
-
-                // Greeting
-                const h = now.getHours();
-                if (h < 12) greetEl.innerText = "শুভ সকাল";
-                else if (h < 17) greetEl.innerText = "শুভ দুপুর";
-                else if (h < 20) greetEl.innerText = "শুভ সন্ধ্যা";
-                else greetEl.innerText = "শুভ রাত্রি";
-            }
-            setInterval(update, 1000);
-            update();
-        }
-
-        // 3. Battery Status API
-        function initBattery() {
+        // ================= REAL-TIME BATTERY STATUS =================
+        function getRealBatteryStatus() {
             if ('getBattery' in navigator) {
-                navigator.getBattery().then(battery => {
-                    const updateBattery = () => {
-                        const level = Math.round(battery.level * 100);
-                        document.getElementById('battery-txt').innerHTML = `${level}%`;
-                    };
-                    updateBattery();
-                    battery.addEventListener('levelchange', updateBattery);
+                navigator.getBattery().then(function(battery) {
+                    updateBatteryUI(battery);
+                    // Listeners for real-time updates
+                    battery.addEventListener('levelchange', () => updateBatteryUI(battery));
+                    battery.addEventListener('chargingchange', () => updateBatteryUI(battery));
                 });
             } else {
-                document.getElementById('battery-txt').innerText = "100%";
+                // Fallback for non-supported browsers/connections
+                document.getElementById('battery-stat').innerHTML = '<i class="fas fa-battery-half"></i> 50%';
             }
         }
 
-        // 4. Ripple & Link Handler
-        function handleLink(url) {
-            // Haptic Feedback
-            if(navigator.vibrate) navigator.vibrate(40);
+        function updateBatteryUI(battery) {
+            const level = Math.floor(battery.level * 100);
+            let icon = 'fa-battery-empty';
             
-            // Ripple Effect Logic
-            const card = event.currentTarget;
-            const circle = document.createElement('span');
-            const diameter = Math.max(card.clientWidth, card.clientHeight);
-            const radius = diameter / 2;
-
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - card.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${event.clientY - card.getBoundingClientRect().top - radius}px`;
-            circle.classList.add('ripple');
-
-            const ripple = card.getElementsByClassName('ripple')[0];
-            if (ripple) ripple.remove();
-
-            card.appendChild(circle);
-
-            // Delay for animation then open
-            setTimeout(() => {
-                window.open(url, '_blank');
-            }, 300);
+            // Determine icon based on level
+            if (level > 90) icon = 'fa-battery-full';
+            else if (level > 70) icon = 'fa-battery-three-quarters';
+            else if (level > 40) icon = 'fa-battery-half';
+            else if (level > 10) icon = 'fa-battery-quarter';
+            
+            // Charging indicator
+            const chargingIcon = battery.charging ? '<i class="fas fa-bolt" style="color: yellow; margin-right: 5px;"></i>' : '';
+            
+            document.getElementById('battery-stat').innerHTML = `${chargingIcon}<i class="fas ${icon}"></i> ${level}%`;
         }
 
-        // 5. 3D Tilt Effect Logic (Desktop Only Optimization)
-        function initTiltEffect() {
-            const cards = document.querySelectorAll('.tilt-card');
+        // ================= CORE FUNCTIONS =================
+        function renderApps(filter) {
+            const container = document.getElementById('apps-container');
+            container.innerHTML = '';
             
-            cards.forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -5; // Max -5deg to 5deg
-                    const rotateY = ((x - centerX) / centerX) * 5;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                    card.style.opacity = '1';
-                });
+            let filtered = filter === 'all' ? appsData : appsData.filter(app => app.cat === filter);
+            
+            // Only add the section title if not the main dashboard
+            if(filter !== 'all') {
+               container.innerHTML = `<h3 class="grid-section-title" style="grid-column: 1/-1">${filter.toUpperCase()} APPS</h3>`;
+            } else {
+               container.innerHTML = `<h3 class="grid-section-title" style="grid-column: 1/-1">PINNED APPS</h3>`;
+            }
+            
+            filtered.forEach(app => {
+                const card = document.createElement('div');
+                card.className = 'app-card';
+                card.onclick = () => window.open(app.url, '_blank');
+                card.innerHTML = `
+                    <div class="app-icon"><i class="fas ${app.icon}"></i></div>
+                    <div class="app-name">${app.name}</div>
+                    <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">${app.cat.toUpperCase()}</div>
+                `;
+                card.querySelector('.app-icon').style.color = app.color;
+                container.appendChild(card);
             });
         }
 
-        // Pulse Animation CSS
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        `;
-        document.head.appendChild(style);
+        function filterApps(cat) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderApps(cat);
+            // Auto close menu on mobile selection
+            if(window.innerWidth <= 900) toggleMenu();
+        }
 
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // ================= SEARCH ENGINE =================
+        function handleSearch(e) {
+            if (e.key === 'Enter') executeSearch();
+        }
+
+        function executeSearch() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                if(query.includes('.') && !query.includes(' ')) window.open(query.startsWith('http') ? query : 'https://' + query, '_blank');
+                else window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+            }
+        }
+
+        // ================= UTILITIES =================
+        function startClock() {
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', {hour12: false, hour:'2-digit', minute:'2-digit'});
+                document.getElementById('date').innerText = now.toLocaleDateString('bn-BD', {weekday:'long', day:'numeric', month:'long'});
+            }, 1000);
+        }
+
+        // ================= SETTINGS =================
+        function openSettings() {
+            document.getElementById('settings-modal').style.display = 'flex';
+            // Close sidebar if on mobile
+            if(window.innerWidth <= 900) toggleMenu();
+        }
+        function setTheme(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            document.documentElement.style.setProperty('--accent', color);
+            document.getElementById('settings-modal').style.display = 'none';
+        }
+
+        // ================= CANVAS PARTICLES =================
+        function initCanvas() {
+            const canvas = document.getElementById('particles-js');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particlesArray = [];
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if(this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                    if(this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                for(let i=0; i<80; i++) particlesArray.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for(let i=0; i<particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    for(let j=i; j<particlesArray.length; j++) {
+                        const dx = particlesArray[i].x - particlesArray[j].x;
+                        const dy = particlesArray[i].y - particlesArray[j].y;
+                        const distance = Math.sqrt(dx*dx + dy*dy);
+                        if(distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance/100})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            init();
+            animate();
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
     </script>
 </body>
 </html>
