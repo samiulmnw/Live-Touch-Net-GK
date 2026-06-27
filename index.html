@@ -2,58 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SH Online TV - FIFA World Cup Edition '26</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SH Online - FIFA World Cup Edition '26</title>
+    
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-blur: blur(20px);
-            --neon-gold: #ffcc00;
-            --neon-glow: rgba(255, 204, 0, 0.4);
-            --live-red: #ff3333;
+            --primary-gold: #FFD700;
+            --primary-red: #E63946;
+            --dark-glass: rgba(15, 23, 42, 0.65);
+            --light-glass: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --blur-heavy: blur(24px);
+            --blur-light: blur(12px);
         }
 
-        /* কোনো টেক্সট যেন কপি বা সিলেক্ট না করা যায় */
+        /* Anti-Copy & App Reset */
         *, *::before, *::after {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Poppins', sans-serif;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            color: #ffffff;
-            /* আপনার দেওয়া ইমেজটি ফুলস্ক্রিন ব্যাকগ্রাউন্ড হিসেবে সেট করা হয়েছে */
-            background: url('https://i.ibb.co.com/TMwvDFDc/Chat-GPT-Image-Jun-12-2026-12-10-59-PM.png') no-repeat center center fixed;
-            background-size: cover;
+            color: var(--text-main);
+            background: #0B0F19;
         }
 
-        /* ডার্ক ওভারলে ব্যাকগ্রাউন্ড ইমেজকে প্রিমিয়াম লুক দেওয়ার জন্য */
+        /* Dynamic Background */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.ibb.co.com/TMwvDFDc/Chat-GPT-Image-Jun-12-2026-12-10-59-PM.png') no-repeat center center;
+            background-size: cover;
+            z-index: 0;
+            transform: scale(1.05);
+            animation: bgZoom 20s infinite alternate ease-in-out;
+        }
+
+        /* Premium Dark Overlay with Vignette */
         .bg-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(15, 23, 42, 0.75));
-            z-index: 0;
+            background: radial-gradient(circle at center, rgba(11, 15, 25, 0.4) 0%, rgba(11, 15, 25, 0.85) 100%);
+            z-index: 1;
         }
 
-        /* প্রিমিয়াম ট্রান্সপারেন্ট হেডার */
+        /* Premium Header */
         .header {
             position: fixed;
             top: 0;
@@ -62,101 +75,129 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 24px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 25px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
             z-index: 100;
+        }
+
+        .menu-btn {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--light-glass);
+            backdrop-filter: var(--blur-light);
+            border: 1px solid var(--border-glass);
+        }
+
+        .menu-btn:hover {
+            color: var(--primary-gold);
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
         }
 
         .header-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, #ffffff, var(--neon-gold));
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #FFF, var(--primary-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.2);
+            text-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
 
-        .menu-btn {
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s;
-            color: #ffffff;
+        /* Empty div for flex balance */
+        .header-spacer {
+            width: 40px;
         }
 
-        .menu-btn:hover {
-            color: var(--neon-gold);
-            transform: scale(1.1);
-        }
-
-        /* কাচের মতো স্বচ্ছ সাইডবার (Glassmorphism Sidebar) */
+        /* Glassmorphism Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
             left: -320px;
-            width: 300px;
+            width: 280px;
             height: 100%;
-            background: rgba(10, 15, 30, 0.5);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-right: 1px solid var(--glass-border);
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+            background: var(--dark-glass);
+            backdrop-filter: var(--blur-heavy);
+            -webkit-backdrop-filter: var(--blur-heavy);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 200;
-            padding-top: 90px;
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .sidebar.active {
-            left: 0;
+            transform: translateX(320px);
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            padding: 16px 28px;
-            color: #e2e8f0;
+            padding: 14px 30px;
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+            position: relative;
             cursor: pointer;
-            margin-bottom: 5px;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary-gold);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .menu-item i {
-            margin-right: 18px;
-            font-size: 1.3rem;
+            margin-right: 20px;
+            font-size: 1.2rem;
             width: 24px;
             text-align: center;
-            color: #cbd5e1;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--neon-gold);
-            border-left: 4px solid var(--neon-gold);
+        .menu-item:hover, .menu-item.active {
+            color: #FFF;
+            background: linear-gradient(90deg, rgba(255,215,0,0.1) 0%, transparent 100%);
             padding-left: 35px;
         }
 
-        .menu-item:hover i {
-            color: var(--neon-gold);
+        .menu-item:hover::before, .menu-item.active::before {
+            transform: scaleY(1);
         }
 
-        /* স্মুথ ব্লার ওভারলে */
+        .menu-item:hover i, .menu-item.active i {
+            color: var(--primary-gold);
+        }
+
+        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s ease;
@@ -168,99 +209,147 @@
             visibility: visible;
         }
 
-        /* মেইন হোম স্ক্রিন কন্টেন্ট */
+        /* Main Content */
         .main-container {
             position: relative;
-            z-index: 1;
-            flex: 1;
+            z-index: 10;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             text-align: center;
-            animation: fadeIn 1.2s ease-out;
         }
 
-        /* গ্লাস কার্ড ব্র্যান্ডিং বক্স */
+        /* Premium Brand Card */
         .brand-card {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            padding: 40px 30px;
-            border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            margin-bottom: 40px;
-            max-width: 400px;
-            width: 100%;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            backdrop-filter: var(--blur-heavy);
+            -webkit-backdrop-filter: var(--blur-heavy);
+            border: 1px solid var(--border-glass);
+            padding: 50px 40px;
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            margin-bottom: 50px;
+            width: 90%;
+            max-width: 420px;
+            animation: slideUpFade 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .brand-card i {
-            font-size: 4.5rem;
-            color: var(--neon-gold);
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--neon-glow));
-            animation: float 3s ease-in-out infinite;
+        /* Subtle glowing orb inside card */
+        .brand-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, transparent 60%);
+            animation: rotateGlow 10s linear infinite;
+        }
+
+        .brand-card i.fa-trophy {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #FFF, var(--primary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 15px rgba(255, 215, 0, 0.3));
+            animation: float 4s ease-in-out infinite;
+            display: inline-block;
         }
 
         .brand-card h1 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             margin: 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FFF;
         }
 
         .brand-card p {
-            margin: 8px 0 0 0;
-            font-size: 1rem;
-            color: #cbd5e1;
-            letter-spacing: 3px;
+            margin: 12px 0 0 0;
+            font-size: 0.95rem;
+            color: var(--primary-gold);
+            letter-spacing: 4px;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        /* অ্যানিমেটেড গ্লোয়িং লাইভ বাটন */
+        /* Professional Live Button */
+        .live-btn-wrapper {
+            position: relative;
+            animation: slideUpFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* Pulsing Rings */
+        .live-btn-wrapper::before, .live-btn-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            border-radius: 50px;
+            z-index: -1;
+            animation: ripple 2s infinite ease-out;
+        }
+
+        .live-btn-wrapper::after {
+            animation-delay: 1s;
+        }
+
         .live-btn {
-            background: linear-gradient(135deg, var(--live-red), #b91c1c);
+            background: linear-gradient(135deg, #FF0033, #B30000);
             color: #ffffff;
-            border: none;
-            padding: 22px 65px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 60px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
+            font-size: 1.4rem;
+            font-weight: 800;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.5);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(255, 0, 51, 0.4), inset 0 2px 0 rgba(255,255,255,0.2);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            animation: pulseGlow 2s infinite;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-btn i {
+            font-size: 1.2rem;
+            animation: blink 1.5s infinite;
         }
 
         .live-btn:hover {
-            transform: scale(1.06) translateY(-5px);
-            box-shadow: 0 0 45px rgba(255, 51, 51, 0.8);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 0, 51, 0.6), inset 0 2px 0 rgba(255,255,255,0.3);
         }
 
         .live-btn:active {
-            transform: scale(0.98) translateY(0);
+            transform: translateY(2px) scale(0.98);
         }
 
-        /* কাস্টম ইন্টারনেট এরর গ্লাস পপআপ (Modal) */
+        /* Internet Error Modal */
         .modal-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -276,93 +365,116 @@
         }
 
         .error-card {
-            background: rgba(30, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 51, 51, 0.3);
-            padding: 35px;
-            border-radius: 24px;
+            background: var(--dark-glass);
+            backdrop-filter: var(--blur-heavy);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            padding: 40px 30px;
+            border-radius: 28px;
             text-align: center;
-            max-width: 340px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 350px;
+            width: 85%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .modal-wrapper.show .error-card {
-            transform: scale(1);
+            transform: translateY(0) scale(1);
         }
 
         .error-card i {
             font-size: 3.5rem;
-            color: var(--live-red);
-            margin-bottom: 15px;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(230, 57, 70, 0.4));
         }
 
         .error-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.4rem;
+            margin: 0 0 12px 0;
+            font-size: 1.5rem;
             font-weight: 700;
+            color: #FFF;
         }
 
         .error-card p {
-            margin: 0 0 25px 0;
-            color: #94a3b8;
+            margin: 0 0 30px 0;
+            color: var(--text-muted);
             font-size: 0.95rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .close-modal-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 10px 30px;
-            border-radius: 12px;
+            padding: 14px 40px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 1px;
         }
 
         .close-modal-btn:hover {
-            background: white;
-            color: black;
+            background: #FFF;
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
         }
 
-        /* অ্যানিমেশন কি-ফ্রেম সমূহ */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes bgZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes ripple {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.6); }
-            70% { box-shadow: 0 0 0 18px rgba(255, 51, 51, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Elements -->
+    <div class="bg-container"></div>
     <div class="bg-overlay"></div>
 
+    <!-- Header -->
     <header class="header">
         <div class="menu-btn" onclick="toggleMenu()">
             <i class="fa-solid fa-bars-staggered"></i>
         </div>
         <div class="header-title">SH ONLINE</div>
-        <div style="width: 25px;"></div> </header>
+        <div class="header-spacer"></div>
+    </header>
 
+    <!-- Sidebar & Overlay -->
     <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
     <nav class="sidebar" id="sidebar">
-        <a onclick="closeMenu()" class="menu-item">
-            <i class="fa-solid fa-square-rss"></i> Home
+        <a onclick="closeMenu()" class="menu-item active">
+            <i class="fa-solid fa-house"></i> Home
         </a>
         <a href="https://wa.me/8801873228584" target="_blank" class="menu-item">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp
@@ -371,36 +483,41 @@
             <i class="fa-brands fa-telegram"></i> Telegram
         </a>
         <a href="mailto:samiulmnw9@gmail.com" class="menu-item">
-            <i class="fa-solid fa-envelope-open-text"></i> Email
+            <i class="fa-solid fa-envelope"></i> Email Support
         </a>
         <a href="mailto:samiulmnw9@gmail.com?subject=SH%20Online%20App%20Report" class="menu-item">
-            <i class="fa-solid fa-triangle-exclamation"></i> Report
+            <i class="fa-solid fa-triangle-exclamation"></i> Report Issue
         </a>
     </nav>
 
+    <!-- Main Content -->
     <main class="main-container">
         <div class="brand-card">
             <i class="fa-solid fa-trophy"></i>
             <h1>SH ONLINE</h1>
-            <p>FIFA World Cup Edition</p>
+            <p>World Cup Edition</p>
         </div>
         
-        <button class="live-btn" onclick="startLiveTV()">
-            <i class="fa-solid fa-play"></i> LIVE NOW
-        </button>
+        <div class="live-btn-wrapper">
+            <button class="live-btn" onclick="startLiveTV()">
+                <i class="fa-solid fa-circle"></i> LIVE NOW
+            </button>
+        </div>
     </main>
 
+    <!-- No Internet Modal -->
     <div class="modal-wrapper" id="internetModal">
         <div class="error-card">
             <i class="fa-solid fa-wifi"></i>
-            <h3>No Internet Connection</h3>
-            <p>Please check your cellular data or Wi-Fi connection and try again.</p>
-            <button class="close-modal-btn" onclick="closeModal()">OK</button>
+            <h3>No Connection</h3>
+            <p>Please check your cellular data or Wi-Fi network to continue streaming.</p>
+            <button class="close-modal-btn" onclick="closeModal()">Try Again</button>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script>
-        // সাইডবার ওপেন ও ক্লোজ লজিক
+        // Sidebar Toggle Logic
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
@@ -411,21 +528,33 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        // ইন্টারনেট কানেকশন ভ্যালিডেশন সহ লাইভ টিভি রিডাইরেকশন
+        // Live TV Redirect & Validation
         function startLiveTV() {
             if (navigator.onLine) {
-                // কানেকশন ঠিক থাকলে সরাসরি আপনার লিংকে নিয়ে যাবে
-                window.location.href = "http://172.20.5.50/";
+                // Add a small delay for button animation feel before redirect
+                setTimeout(() => {
+                    window.location.href = "http://172.20.5.50/";
+                }, 300);
             } else {
-                // ইন্টারনেট না থাকলে কাস্টম গ্লাস পপআপ ওপেন হবে
                 document.getElementById('internetModal').classList.add('show');
             }
         }
 
-        // কাস্টম মডাল বন্ধ করার ফাংশন
+        // Close Error Modal
         function closeModal() {
             document.getElementById('internetModal').classList.remove('show');
         }
+
+        // Handle Active State in Sidebar
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                if(this.getAttribute('onclick') !== 'closeMenu()') {
+                    this.classList.add('active');
+                }
+            });
+        });
     </script>
 </body>
-    </html>
+</html>
